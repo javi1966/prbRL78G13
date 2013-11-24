@@ -1,0 +1,458 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 27/Jul/2012  19:39:36 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  D:\DESARROLLOS\prbRL78G13\RTC.c                          #
+#    Command line =  D:\DESARROLLOS\prbRL78G13\RTC.c --core rl78_1            #
+#                    --code_model near --data_model near                      #
+#                    --near_const_location rom0 -o                            #
+#                    D:\DESARROLLOS\prbRL78G13\Debug\Obj\ --dlib_config       #
+#                    "D:\Archivos de programa\IAR Systems\Embedded Workbench  #
+#                    6.0 Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse     #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN D:\DESARROLLOS\prbRL78G13\Debug\List\ -I    #
+#                    D:\DESARROLLOS\prbRL78G13\user_include\                  #
+#    List file    =  D:\DESARROLLOS\prbRL78G13\Debug\List\RTC.lst             #
+#    Object file  =  D:\DESARROLLOS\prbRL78G13\Debug\Obj\RTC.r87              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\DESARROLLOS\prbRL78G13\RTC.c
+      1          #include "ior5f100le.h"
+
+   \                                 In  segment NEAR_A, at 0xfff92
+   \   unsigned char volatile __sfr __no_bit_access SEC
+   \                     SEC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff93
+   \   unsigned char volatile __sfr __no_bit_access MIN
+   \                     MIN:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff94
+   \   unsigned char volatile __sfr __no_bit_access HOUR
+   \                     HOUR:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff95
+   \   unsigned char volatile __sfr __no_bit_access WEEK
+   \                     WEEK:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff96
+   \   unsigned char volatile __sfr __no_bit_access DAY
+   \                     DAY:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff97
+   \   unsigned char volatile __sfr __no_bit_access MONTH
+   \                     MONTH:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff98
+   \   unsigned char volatile __sfr __no_bit_access YEAR
+   \                     YEAR:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff9d
+   \   union <unnamed> volatile __sfr _A_RTCC0
+   \                     _A_RTCC0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff9e
+   \   union <unnamed> volatile __sfr _A_RTCC1
+   \                     _A_RTCC1:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffe2
+   \   union <unnamed> volatile __sfr _A_IF1
+   \                     _A_IF1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe6
+   \   union <unnamed> volatile __sfr _A_MK1
+   \                     _A_MK1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffea
+   \   union <unnamed> volatile __sfr _A_PR01
+   \                     _A_PR01:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffee
+   \   union <unnamed> volatile __sfr _A_PR11
+   \                     _A_PR11:
+   \   000000                       DS 2
+      2          #include "ior5f100le_ext.h"
+
+   \                                 In  segment NEAR_A, at 0xf00f0
+   \   union <unnamed> volatile _A_PER0
+   \                     _A_PER0:
+   \   000000                       DS 1
+      3          
+      4          #include "RTC.h"
+      5          
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+      6           struct RTCCounterValue *stRTC_Data;
+   \                     stRTC_Data:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+      7          
+      8          
+
+   \                                 In  segment CODE, align 1, keep-with-next
+      9          void initRTC()
+   \                     initRTC:
+     10          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     11            
+     12              RTCEN = 1U;     /* supply RTC clock */
+   \   000000 36F000                MOVW      HL, #0xF0
+   \   000003 71F2                  SET1      [HL].7
+     13              RTCE = 0U;      /* disable RTC clock operation */
+   \   000005 717B9D                CLR1      0xFFF9D.7
+     14              RTCMK = 1U;     /* disable INTRTC interrupt */
+   \   000008 711AE7                SET1      0xFFFE7.1
+     15              RTCIF = 0U;     /* clear INTRTC interrupt flag */
+   \   00000B 711BE3                CLR1      0xFFFE3.1
+     16              /* Set INTRTC level 1 priority */
+     17              RTCPR1 = 0U;
+   \   00000E 711BEF                CLR1      0xFFFEF.1
+     18              RTCPR0 = 1U;
+   \   000011 711AEB                SET1      0xFFFEB.1
+     19              RTCC0 = 0x0A;  //24h ,cada segundo
+   \   000014 CE9D0A                MOV       0xFFF9D, #0xA
+     20              RTCMK = 1U;    //enable operacion
+   \   000017 711AE7                SET1      0xFFFE7.1
+     21              RTCE = 1U;
+   \   00001A 717A9D                SET1      0xFFF9D.7
+     22              
+     23             
+     24            
+     25          }  
+   \   00001D D7                    RET       
+   \   00001E                       REQUIRE ?CLRL78_V1_0_L00
+   \   00001E                       REQUIRE _A_PER0
+   \   00001E                       REQUIRE _A_RTCC0
+   \   00001E                       REQUIRE _A_MK1
+   \   00001E                       REQUIRE _A_IF1
+   \   00001E                       REQUIRE _A_PR11
+   \   00001E                       REQUIRE _A_PR01
+     26          
+     27          //********************************************************************************************
+     28          #pragma vector = INTRTC_vect
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     29          __interrupt void R_RTC_Interrupt(void)
+   \                     R_RTC_Interrupt:
+     30          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C1                    PUSH      AX
+   \   000001 C3                    PUSH      BC
+   \   000002 C7                    PUSH      HL
+   \   000003                       ; Auto size: 0
+     31              
+     32              unsigned long i;
+     33              
+     34              RTCC1 |= 0x01;  //Pausa
+   \   000003 710A9E                SET1      0xFFF9E.0
+     35              /* Wait 10 us */
+     36              for( i=0U; i<RTC_WAITTIME; i++ )
+   \   000006 F6                    CLRW      AX
+   \   000007 F7                    CLRW      BC
+   \   000008 EF0C                  BR        S:??ponHora_0
+     37              {
+     38                  asm("nop");
+   \                     ??R_RTC_Interrupt_0:
+   \   00000A 00                    nop
+     39              }
+   \   00000B 040100                ADDW      AX, #0x1
+   \   00000E 61D8                  SKNC
+   \   000010 A3                    INCW      BC
+   \                     ??R_RTC_Interrupt_1:
+   \   000011 33                    XCHW      AX, BC
+   \   000012 040000                ADDW      AX, #0x0
+   \   000015 33                    XCHW      AX, BC
+   \                     ??ponHora_0:
+   \   000016 33                    XCHW      AX, BC
+   \   000017 440000                CMPW      AX, #0x0
+   \   00001A 33                    XCHW      AX, BC
+   \   00001B 61F8                  SKNZ
+   \   00001D 444001                CMPW      AX, #0x140
+   \                     ??R_RTC_Interrupt_2:
+   \   000020 DCE8                  BC        ??R_RTC_Interrupt_0
+     40              if (RWST == 0U)
+   \   000022 369EFF                MOVW      HL, #0xFFF9E
+   \   000025 319551                BF        [HL].1, ??ponHora_1
+     41              {
+     42                  //status = MD_BUSY1;
+     43                ;
+     44              }
+     45              else
+     46              {
+     47                  stRTC_Data->Sec = SEC;
+   \   000028 8E92                  MOV       A, 0xFFF92
+   \   00002A FB....                MOVW      HL, N:stRTC_Data
+   \   00002D 9B                    MOV       [HL], A
+     48                  stRTC_Data->Min = MIN;
+   \   00002E 8E93                  MOV       A, 0xFFF93
+   \   000030 FB....                MOVW      HL, N:stRTC_Data
+   \   000033 9C01                  MOV       [HL+0x01], A
+     49                  stRTC_Data->Hour = HOUR;
+   \   000035 8E94                  MOV       A, 0xFFF94
+   \   000037 FB....                MOVW      HL, N:stRTC_Data
+   \   00003A 9C02                  MOV       [HL+0x02], A
+     50                  stRTC_Data->Week = WEEK;
+   \   00003C 8E95                  MOV       A, 0xFFF95
+   \   00003E FB....                MOVW      HL, N:stRTC_Data
+   \   000041 9C04                  MOV       [HL+0x04], A
+     51                  stRTC_Data->Day = DAY;
+   \   000043 8E96                  MOV       A, 0xFFF96
+   \   000045 FB....                MOVW      HL, N:stRTC_Data
+   \   000048 9C03                  MOV       [HL+0x03], A
+     52                  stRTC_Data->Month = MONTH;
+   \   00004A 8E97                  MOV       A, 0xFFF97
+   \   00004C FB....                MOVW      HL, N:stRTC_Data
+   \   00004F 9C05                  MOV       [HL+0x05], A
+     53                  stRTC_Data->Year = YEAR;
+   \   000051 8E98                  MOV       A, 0xFFF98
+   \   000053 FB....                MOVW      HL, N:stRTC_Data
+   \   000056 9C06                  MOV       [HL+0x06], A
+     54                  RTCC1 &= (unsigned char)~0x01;  //counter reanuda
+   \   000058 710B9E                CLR1      0xFFF9E.0
+     55                  /* Wait 10 us */
+     56                  for( i=0U; i<RTC_WAITTIME; i++ )
+   \   00005B F6                    CLRW      AX
+   \   00005C F7                    CLRW      BC
+   \   00005D EF0C                  BR        S:??ponHora_2
+     57                  {
+     58                     asm("nop");
+   \                     ??R_RTC_Interrupt_3:
+   \   00005F 00                    nop
+     59                  }
+   \   000060 040100                ADDW      AX, #0x1
+   \   000063 61D8                  SKNC
+   \   000065 A3                    INCW      BC
+   \                     ??R_RTC_Interrupt_4:
+   \   000066 33                    XCHW      AX, BC
+   \   000067 040000                ADDW      AX, #0x0
+   \   00006A 33                    XCHW      AX, BC
+   \                     ??ponHora_2:
+   \   00006B 33                    XCHW      AX, BC
+   \   00006C 440000                CMPW      AX, #0x0
+   \   00006F 33                    XCHW      AX, BC
+   \   000070 61F8                  SKNZ
+   \   000072 444001                CMPW      AX, #0x140
+   \                     ??R_RTC_Interrupt_5:
+   \   000075 DCE8                  BC        ??R_RTC_Interrupt_3
+     60                  if (RWST == 1U)
+   \   000077 8E9E                  MOV       A, 0xFFF9E
+     61                  {
+     62                      ;
+     63                  }
+     64              }
+     65              
+     66              
+     67              
+     68          }
+   \                     ??ponHora_1:
+   \   000079 C6                    POP       HL
+   \   00007A C2                    POP       BC
+   \   00007B C0                    POP       AX
+   \   00007C 61FC                  RETI      
+   \   00007E                       REQUIRE ?CLRL78_V1_0_L00
+   \   00007E                       REQUIRE _A_RTCC1
+   \   00007E                       REQUIRE SEC
+   \   00007E                       REQUIRE MIN
+   \   00007E                       REQUIRE HOUR
+   \   00007E                       REQUIRE WEEK
+   \   00007E                       REQUIRE DAY
+   \   00007E                       REQUIRE MONTH
+   \   00007E                       REQUIRE YEAR
+     69          
+     70          //************************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     71          unsigned char bin2bcd(unsigned char bin)
+   \                     bin2bcd:
+     72          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001                       ; Auto size: 0
+   \   000001 73                    MOV       B, A
+     73          unsigned char bcd;
+     74             
+     75              bcd=(bin/10) << 4;
+   \   000002 500A                  MOV       X, #0xA
+   \   000004 63                    MOV       A, B
+   \   000005 FD....                CALL      N:?UC_DIV_L01
+   \   000008 72                    MOV       C, A
+   \   000009 62                    MOV       A, C
+   \   00000A 3149                  SHL       A, 0x4
+   \   00000C 72                    MOV       C, A
+     76              bcd+=(bin%10);
+   \   00000D 500A                  MOV       X, #0xA
+   \   00000F 63                    MOV       A, B
+   \   000010 FD....                CALL      N:?UC_MOD_L01
+   \   000013 73                    MOV       B, A
+   \   000014 62                    MOV       A, C
+   \   000015 610B                  ADD       A, B
+   \   000017 72                    MOV       C, A
+     77              return (bcd);
+   \   000018 62                    MOV       A, C
+   \   000019 C2                    POP       BC
+   \   00001A D7                    RET       
+   \   00001B                       REQUIRE ?CLRL78_V1_0_L00
+     78          }
+     79          //***********************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     80          unsigned char bcd2bin(unsigned char BCD)
+   \                     bcd2bin:
+     81          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001                       ; Auto size: 0
+   \   000001 73                    MOV       B, A
+     82            unsigned char numero;
+     83            
+     84            numero=(BCD >> 4) * 10;
+   \   000002 500A                  MOV       X, #0xA
+   \   000004 63                    MOV       A, B
+   \   000005 314A                  SHR       A, 0x4
+   \   000007 D6                    MULU      X
+   \   000008 60                    MOV       A, X
+   \   000009 70                    MOV       X, A
+     85            numero+=(BCD & 0x0F);
+   \   00000A 63                    MOV       A, B
+   \   00000B 5C0F                  AND       A, #0xF
+   \   00000D 73                    MOV       B, A
+   \   00000E 60                    MOV       A, X
+   \   00000F 610B                  ADD       A, B
+   \   000011 70                    MOV       X, A
+     86          
+     87            return numero;
+   \   000012 60                    MOV       A, X
+   \   000013 C2                    POP       BC
+   \   000014 D7                    RET       
+   \   000015                       REQUIRE ?CLRL78_V1_0_L00
+     88          }
+     89          //******************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     90          void ponHora(const unsigned char hora,const unsigned char min)
+   \                     ponHora:
+     91          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     92            
+     93            int i;
+     94            
+     95            RTCC1 |=0x01;   //PAUSE
+   \   000000 710A9E                SET1      0xFFF9E.0
+     96            
+     97              for( i=0U; i<RTC_WAITTIME; i++ )
+   \   000003 360000                MOVW      HL, #0x0
+   \   000006 EF02                  BR        S:??ponHora_3
+     98              {
+     99                 asm("nop");
+   \                     ??ponHora_4:
+   \   000008 00                    nop
+    100              }
+   \   000009 A7                    INCW      HL
+   \                     ??ponHora_3:
+   \   00000A 37                    XCHW      AX, HL
+   \   00000B 444001                CMPW      AX, #0x140
+   \   00000E 37                    XCHW      AX, HL
+   \   00000F DCF7                  BC        ??ponHora_4
+    101            
+    102            HOUR=bin2bcd(hora);
+   \   000011 FD....                CALL      bin2bcd
+   \   000014 9E94                  MOV       0xFFF94, A
+    103            MIN=bin2bcd(min);
+   \   000016 63                    MOV       A, B
+   \   000017 FD....                CALL      bin2bcd
+   \   00001A 9E93                  MOV       0xFFF93, A
+    104            SEC=0;
+   \   00001C CE9200                MOV       0xFFF92, #0x0
+    105            
+    106            RTCC1 &= (unsigned char)~0x01;  //reanuda RTC
+   \   00001F 710B9E                CLR1      0xFFF9E.0
+    107            
+    108              for( i=0U; i<RTC_WAITTIME; i++ )
+   \   000022 360000                MOVW      HL, #0x0
+   \   000025 EF02                  BR        S:??ponHora_5
+    109              {
+    110                 asm("nop");
+   \                     ??ponHora_6:
+   \   000027 00                    nop
+    111              }
+   \   000028 A7                    INCW      HL
+   \                     ??ponHora_5:
+   \   000029 37                    XCHW      AX, HL
+   \   00002A 444001                CMPW      AX, #0x140
+   \   00002D 37                    XCHW      AX, HL
+   \   00002E DCF7                  BC        ??ponHora_6
+    112          }
+   \   000030 D7                    RET       
+   \   000031                       REQUIRE ?CLRL78_V1_0_L00
+   \   000031                       REQUIRE _A_RTCC1
+   \   000031                       REQUIRE HOUR
+   \   000031                       REQUIRE MIN
+   \   000031                       REQUIRE SEC
+
+   \                                 In  segment INTVEC, offset 0x36, root
+   \                     `??R_RTC_Interrupt??INTVEC 54`:
+   \   000036 ....                  DW R_RTC_Interrupt
+
+   Segment part sizes:
+
+     Function/Label               Bytes
+     --------------               -----
+     SEC                             1
+     MIN                             1
+     HOUR                            1
+     WEEK                            1
+     DAY                             1
+     MONTH                           1
+     YEAR                            1
+     _A_RTCC0                        1
+     _A_RTCC1                        1
+     _A_IF1                          2
+     _A_MK1                          2
+     _A_PR01                         2
+     _A_PR11                         2
+     _A_PER0                         1
+     stRTC_Data                      2
+     initRTC                        30
+     R_RTC_Interrupt               126
+     bin2bcd                        27
+     bcd2bin                        21
+     ponHora                        49
+     ??R_RTC_Interrupt??INTVEC 54    2
+
+ 
+ 253 bytes in segment CODE
+   2 bytes in segment INTVEC
+  18 bytes in segment NEAR_A
+   2 bytes in segment NEAR_Z
+ 
+ 253 bytes of CODE memory (+  2 bytes shared)
+   2 bytes of DATA memory (+ 18 bytes shared)
+
+Errors: none
+Warnings: none

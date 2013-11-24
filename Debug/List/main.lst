@@ -1,0 +1,1092 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 27/Jul/2012  19:40:41 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  D:\DESARROLLOS\prbRL78G13\main.c                         #
+#    Command line =  D:\DESARROLLOS\prbRL78G13\main.c --core rl78_1           #
+#                    --code_model near --data_model near                      #
+#                    --near_const_location rom0 -o                            #
+#                    D:\DESARROLLOS\prbRL78G13\Debug\Obj\ --dlib_config       #
+#                    "D:\Archivos de programa\IAR Systems\Embedded Workbench  #
+#                    6.0 Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse     #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN D:\DESARROLLOS\prbRL78G13\Debug\List\ -I    #
+#                    D:\DESARROLLOS\prbRL78G13\user_include\                  #
+#    List file    =  D:\DESARROLLOS\prbRL78G13\Debug\List\main.lst            #
+#    Object file  =  D:\DESARROLLOS\prbRL78G13\Debug\Obj\main.r87             #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\DESARROLLOS\prbRL78G13\main.c
+      1          /**************************************************
+      2           *
+      3           * This is a template file.
+      4           *
+      5           * Copyright 2011 IAR Systems AB.
+      6           *
+      7          * $Revision: 205 $
+      8           *
+      9           **************************************************/
+     10          //***************************************************************************
+     11          
+     12          #include "ior5f100le.h"
+
+   \                                 In  segment SADDR_A, at 0xfff00
+   \   union <unnamed> volatile __saddr _A_P0
+   \                     _A_P0:
+   \   000000                       DS 1
+
+   \                                 In  segment SADDR_A, at 0xfff01
+   \   union <unnamed> volatile __saddr _A_P1
+   \                     _A_P1:
+   \   000000                       DS 1
+
+   \                                 In  segment SADDR_A, at 0xfff05
+   \   union <unnamed> volatile __saddr _A_P5
+   \                     _A_P5:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff20
+   \   union <unnamed> volatile __sfr _A_PM0
+   \                     _A_PM0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff25
+   \   union <unnamed> volatile __sfr _A_PM5
+   \                     _A_PM5:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff68
+   \   unsigned short volatile __sfr __no_bit_access TDR04
+   \                     TDR04:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfff6a
+   \   unsigned short volatile __sfr __no_bit_access TDR05
+   \                     TDR05:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfff90
+   \   unsigned short volatile __sfr __no_bit_access ITMC
+   \                     ITMC:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfff92
+   \   unsigned char volatile __sfr __no_bit_access SEC
+   \                     SEC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff93
+   \   unsigned char volatile __sfr __no_bit_access MIN
+   \                     MIN:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff94
+   \   unsigned char volatile __sfr __no_bit_access HOUR
+   \                     HOUR:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffa0
+   \   unsigned char volatile __sfr __no_bit_access CMC
+   \                     CMC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffa1
+   \   union <unnamed> volatile __sfr _A_CSC
+   \                     _A_CSC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffa2
+   \   union <unnamed> const volatile __sfr _A_OSTC
+   \                     _A_OSTC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffa3
+   \   unsigned char volatile __sfr __no_bit_access OSTS
+   \                     OSTS:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffa4
+   \   union <unnamed> volatile __sfr _A_CKC
+   \                     _A_CKC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffd0
+   \   union <unnamed> volatile __sfr _A_IF2
+   \                     _A_IF2:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffd4
+   \   union <unnamed> volatile __sfr _A_MK2
+   \                     _A_MK2:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe2
+   \   union <unnamed> volatile __sfr _A_IF1
+   \                     _A_IF1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe6
+   \   union <unnamed> volatile __sfr _A_MK1
+   \                     _A_MK1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffea
+   \   union <unnamed> volatile __sfr _A_PR01
+   \                     _A_PR01:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffee
+   \   union <unnamed> volatile __sfr _A_PR11
+   \                     _A_PR11:
+   \   000000                       DS 2
+     13          #include "ior5f100le_ext.h"
+
+   \                                 In  segment NEAR_A, at 0xf0077
+   \   unsigned char volatile __no_bit_access PIOR
+   \                     PIOR:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf00f0
+   \   union <unnamed> volatile _A_PER0
+   \                     _A_PER0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf00f3
+   \   unsigned char volatile __no_bit_access OSMC
+   \                     OSMC:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0198
+   \   unsigned short volatile __no_bit_access TMR04
+   \                     TMR04:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf019a
+   \   unsigned short volatile __no_bit_access TMR05
+   \                     TMR05:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b2
+   \   union <unnamed> volatile _A_TS0
+   \                     _A_TS0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b4
+   \   union <unnamed> volatile _A_TT0
+   \                     _A_TT0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b6
+   \   unsigned short volatile __no_bit_access TPS0
+   \                     TPS0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b8
+   \   union <unnamed> volatile __no_bit_access _A_TO0
+   \                     _A_TO0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01ba
+   \   union <unnamed> volatile _A_TOE0
+   \                     _A_TOE0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01bc
+   \   union <unnamed> volatile __no_bit_access _A_TOL0
+   \                     _A_TOL0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01be
+   \   union <unnamed> volatile __no_bit_access _A_TOM0
+   \                     _A_TOM0:
+   \   000000                       DS 2
+     14          #include "intrinsics.h"
+     15          #include "delay.h"
+     16          #include "lcd.h"
+     17          #include "IR.h"
+     18          #include "RTC.h"
+     19          
+     20          
+     21          
+     22          // ****** defines's ********************
+     23          
+     24          #define DI     __disable_interrupt
+     25          #define EI     __enable_interrupt
+     26          #define HALT    __halt
+     27          #define NOP     __no_operation
+     28          #define STOP    __stop
+     29          
+     30          #define LED_VERDE1_ON       P5 &= ~(1<<2); 
+     31          #define LED_VERDE1_OFF      P5 |= (1<<2); 
+     32          #define LED_VERDE3_ON       P5 &= ~(1<<3);
+     33          #define LED_VERDE3_OFF      P5 |= (1<<3); 
+     34          
+     35          
+     36          
+     37          #define GetSystemClock()  (12000000ul)
+     38          #define GetInstructionClock() GetSystemClock()
+     39          
+     40          
+     41          
+     42          
+     43          
+     44          //*********** pragma's *****************
+     45          
+     46          /* Start user code for global. Do not edit comment generated here */
+     47          #pragma location = "OPTBYTE"
+
+   \                                 In  segment OPTBYTE, align 1, root
+     48          __root const unsigned char opbyte0 = 0xEFU;
+   \                     opbyte0:
+   \   000000 EF                    DB 239
+     49          #pragma location = "OPTBYTE"
+
+   \                                 In  segment OPTBYTE, align 1, root
+     50          __root const unsigned char opbyte1 = 0xFFU;
+   \                     opbyte1:
+   \   000000 FF                    DB 255
+     51          #pragma location = "OPTBYTE"
+
+   \                                 In  segment OPTBYTE, align 1, root
+     52          __root const unsigned char opbyte2 = 0xE8U;
+   \                     opbyte2:
+   \   000000 E8                    DB 232
+     53          #pragma location = "OPTBYTE"
+
+   \                                 In  segment OPTBYTE, align 1, root
+     54          __root const unsigned char opbyte3 = 0x84U;
+   \                     opbyte3:
+   \   000000 84                    DB 132
+     55          
+     56          /* Set security ID */
+     57          #pragma location = "SECUID"
+
+   \                                 In  segment SECUID, align 2, root
+     58          __root const unsigned char secuid[10] =
+   \                     secuid:
+   \   000000 FFFFFFFFFFFF          DB 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
+     59              {0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU, 0xFFU};
+     60          //****************************************************************************
+     61          // Variables Globales
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     62          int DT=0;
+   \                     DT:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_I, align 1, align-sorted
+     63          unsigned char flag = 1;
+   \                     flag:
+   \   000000                       DS 1
+   \   000001                       REQUIRE `?<Initializer for flag>`
+   \   000001                       REQUIRE __INIT_NEAR_I
+     64          
+     65          
+     66          
+     67          
+     68          //*******************************************************************************
+     69          //Cambia Duty Cycle
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     70          void CambiaDT_CH45(unsigned char ratio)
+   \                     CambiaDT_CH45:
+     71          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001 C5                    PUSH      DE
+   \   000002                       ; Auto size: 0
+     72          	unsigned long reg = 0U;
+   \   000002 5500                  MOV       D, #0x0
+   \   000004 5700                  MOV       H, #0x0
+     73          	
+     74          	if (ratio > 100U)
+   \   000006 4C65                  CMP       A, #0x65
+   \   000008 61C8                  SKC
+     75          	{
+     76          		ratio = 100U;
+   \   00000A 5164                  MOV       A, #0x64
+     77          	}
+     78          	reg = TDR04;
+   \                     ??CambiaDT_CH45_0:
+   \   00000C 14                    MOVW      DE, AX
+   \   00000D AE68                  MOVW      AX, 0xFFF68
+   \   00000F 35                    XCHW      AX, DE
+   \   000010 360000                MOVW      HL, #0x0
+     79          	reg = (reg + 1) * ratio / 100U;
+   \   000013 F7                    CLRW      BC
+   \   000014 C3                    PUSH      BC
+   \   000015 326400                MOVW      BC, #0x64
+   \   000018 C3                    PUSH      BC
+   \   000019 70                    MOV       X, A
+   \   00001A F1                    CLRB      A
+   \   00001B F7                    CLRW      BC
+   \   00001C C3                    PUSH      BC
+   \   00001D C1                    PUSH      AX
+   \   00001E 15                    MOVW      AX, DE
+   \   00001F 040100                ADDW      AX, #0x1
+   \   000022 14                    MOVW      DE, AX
+   \   000023 61D8                  SKNC
+   \   000025 A7                    INCW      HL
+   \                     ??CambiaDT_CH45_1:
+   \   000026 17                    MOVW      AX, HL
+   \   000027 040000                ADDW      AX, #0x0
+   \   00002A 16                    MOVW      HL, AX
+   \   00002B 15                    MOVW      AX, DE
+   \   00002C C7                    PUSH      HL
+   \   00002D C2                    POP       BC
+   \   00002E FD....                CALL      N:?L_MUL_L03
+   \   000031 FD....                CALL      N:?UL_DIV_L03
+   \   000034 14                    MOVW      DE, AX
+   \   000035 C3                    PUSH      BC
+   \   000036 C6                    POP       HL
+     80          	TDR05 = (unsigned short)reg;
+   \   000037 15                    MOVW      AX, DE
+   \   000038 BE6A                  MOVW      0xFFF6A, AX
+   \   00003A 14                    MOVW      DE, AX
+     81          }
+   \   00003B C4                    POP       DE
+   \   00003C C2                    POP       BC
+   \   00003D D7                    RET       
+   \   00003E                       REQUIRE ?CLRL78_V1_0_L00
+   \   00003E                       REQUIRE TDR04
+   \   00003E                       REQUIRE TDR05
+     82          
+     83          //*****************************************************************************
+     84          
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     85          void  main( void )
+   \                     main:
+     86          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001 C5                    PUSH      DE
+   \   000002                       ; Auto size: 10
+   \   000002 200A                  SUBW      SP, #0xA
+     87                int valor=0;
+   \   000004 F7                    CLRW      BC
+     88                unsigned char buffer_reloj[]="00:00:00";
+   \   000005 AEF8                  MOVW      AX, SP
+   \   000007 14                    MOVW      DE, AX
+   \   000008 36....                MOVW      HL, #`?<Constant "00:00:00">`
+   \   00000B AB                    MOVW      AX, [HL]
+   \   00000C B9                    MOVW      [DE], AX
+   \   00000D AC02                  MOVW      AX, [HL+0x02]
+   \   00000F BA02                  MOVW      [DE+0x02], AX
+   \   000011 AC04                  MOVW      AX, [HL+0x04]
+   \   000013 BA04                  MOVW      [DE+0x04], AX
+   \   000015 AC06                  MOVW      AX, [HL+0x06]
+   \   000017 BA06                  MOVW      [DE+0x06], AX
+   \   000019 8C08                  MOV       A, [HL+0x08]
+   \   00001B 9A08                  MOV       [DE+0x08], A
+     89                
+     90               
+     91                unsigned char comando;
+     92                unsigned char temp_stabset, temp_stabwait;
+     93                
+     94                int i;
+     95             
+     96              DI();  // configura reloj a 12Mhz
+   \   00001D 717BFA                DI        
+     97             
+     98              PIOR = 0x00U;
+   \   000020 CF770000              MOV       0x77, #0x0
+     99          
+    100             
+    101          
+    102              /* Set fMX    12mhZ@0.0833333 US*/
+    103              
+    104              CMC =  0x53U;
+   \   000024 CEA053                MOV       0xFFFA0, #0x53
+    105              OSTS = 0x07U;  //estabilizacion 2 ^ 18/fX
+   \   000027 CEA307                MOV       0xFFFA3, #0x7
+    106              MSTOP = 0U;    //X1 oscillator operating
+   \   00002A 717BA1                CLR1      0xFFFA1.7
+    107              
+    108              temp_stabset = 0xFFU;
+   \   00002D 50FF                  MOV       X, #0xFF
+    109              do
+    110              {
+    111                  temp_stabwait = OSTC;
+   \                     ??main_0:
+   \   00002F 8EA2                  MOV       A, 0xFFFA2
+    112                  temp_stabwait &= temp_stabset;
+   \   000031 6158                  AND       A, X
+    113              }
+    114              while (temp_stabwait != temp_stabset);
+   \   000033 6148                  CMP       A, X
+   \   000035 DFF8                  BNZ       ??main_0
+    115              /* Set fMAIN */
+    116              MCM0 = 1U;  //Selects the high-speed system clock (fMX) as the main system clock (fMAIN)
+   \   000037 714AA4                SET1      0xFFFA4.4
+    117              /* Set fSUB */
+    118              XTSTOP = 0U;  //XT1 operating
+   \   00003A 716BA1                CLR1      0xFFFA1.6
+    119              // Software wait 5us or more 
+    120              for( i=0U; i<=100U; i++ )
+   \   00003D F6                    CLRW      AX
+   \   00003E EF02                  BR        S:??MD_INTIT_0
+    121              {
+    122                 NOP();
+   \                     ??main_1:
+   \   000040 00                    NOP       
+    123              }
+   \   000041 A1                    INCW      AX
+   \                     ??MD_INTIT_0:
+   \   000042 446500                CMPW      AX, #0x65
+   \   000045 DCF9                  BC        ??main_1
+    124              // fSUB
+    125              OSMC = 0x00;   //reloj para perifericos y RTC e IT 
+   \   000047 CFF30000              MOV       0xF3, #0x0
+    126              /* Set fCLK */
+    127              CSS = 0U;    //Main system clock (fMAIN)
+   \   00004B 716BA4                CLR1      0xFFFA4.6
+    128              /* Set fIH */
+    129              HIOSTOP = 1U;  //High-speed on-chip oscillator stopped
+   \   00004E 710AA1                SET1      0xFFFA1.0
+    130             
+    131              EI();
+   \   000051 717AFA                EI        
+    132                
+    133                
+    134                
+    135             
+    136                 //Configura Puertos
+    137                 PM5 = 0x00U; //salidas
+   \   000054 CE2500                MOV       0xFFF25, #0x0
+    138                 P5 = 0xFF; 
+   \   000057 CD05FF                MOV       S:0xFFF05, #0xFF
+    139                 
+    140                 P0  = 0x00;
+   \   00005A F400                  CLRB      S:0xFFF00
+    141                 PM0 = 0x20;
+   \   00005C CE2020                MOV       0xFFF20, #0x20
+    142                 
+    143                 
+    144                  LCDInit(); 
+   \   00005F FD....                CALL      LCDInit
+    145                  initRTC();
+   \   000062 FD....                CALL      initRTC
+    146                  initIR();
+   \   000065 FD....                CALL      initIR
+    147            
+    148            
+    149                 // Configura TIMER INTERVAL ******************************
+    150          
+    151                  RTCEN = 1U;	/* supply RTC clock */
+   \   000068 36F000                MOVW      HL, #0xF0
+   \   00006B 71F2                  SET1      [HL].7
+    152                  ITMC =  0x0000U;   //cuenta 30,5176
+   \   00006D CB900000              MOVW      0xFFF90, #0x0
+    153                  ITMK = 1U;	// disable INTIT interrupt 
+   \   000071 712AE7                SET1      0xFFFE7.2
+    154          	ITIF = 0U;	//clear INTIT interrupt flag 
+   \   000074 712BE3                CLR1      0xFFFE3.2
+    155          	// Set INTIT low priority 
+    156          	ITPR1 = 1U;
+   \   000077 712AEF                SET1      0xFFFEF.2
+    157          	ITPR0 = 1U;
+   \   00007A 712AEB                SET1      0xFFFEB.2
+    158          	ITMC = 0x0CCEU;  //Tosc 1/32768 30.5us * 3278(0xCCE) = 100ms
+   \   00007D CB90CE0C              MOVW      0xFFF90, #0xCCE
+    159                  //Start IT  cada 100ms
+    160                  ITIF = 0U;	// clear INTIT interrupt flag 
+   \   000081 712BE3                CLR1      0xFFFE3.2
+    161          	ITMK = 0U;	// enable INTIT interrupt 
+   \   000084 712BE7                CLR1      0xFFFE7.2
+    162          	ITMC |= 0x8000U;	// enable IT operation 
+   \   000087 AE90                  MOVW      AX, 0xFFF90
+   \   000089 6C80                  OR        A, #0x80
+   \   00008B 08                    XCH       A, X
+   \   00008C 6C00                  OR        A, #0x0
+   \   00008E 08                    XCH       A, X
+   \   00008F BE90                  MOVW      0xFFF90, AX
+    163                  
+    164                  //*****************************
+    165                  
+    166                
+    167                  
+    168                  
+    169                  //********** CONFIGURA PWM SALIDA P05 *************************
+    170                  TAU0EN = 1U;	
+   \   000091 36F000                MOVW      HL, #0xF0
+   \   000094 7182                  SET1      [HL].0
+    171                  TPS0 = 0x0000U;
+   \   000096 F6                    CLRW      AX
+   \   000097 BFB601                MOVW      0x1B6, AX
+    172                  TT0 = 0x0AFFU;
+   \   00009A 30FF0A                MOVW      AX, #0xAFF
+   \   00009D BFB401                MOVW      0x1B4, AX
+    173                  TMMK04 = 0U;	/* disable INTTM04 interrupt */
+   \   0000A0 717BE7                CLR1      0xFFFE7.7
+    174          	TMIF04 = 0U;	/* clear INTTM04 interrupt flag */
+   \   0000A3 717BE3                CLR1      0xFFFE3.7
+    175          	/* Mask channel 5 interrupt */
+    176          	TMMK05 = 0U;	/* disable INTTM05 interrupt */
+   \   0000A6 710BD4                CLR1      0xFFFD4.0
+    177          	TMIF05 = 0U;	/* clear INTTM05 interrupt flag */
+   \   0000A9 710BD0                CLR1      0xFFFD0.0
+    178                  
+    179                  //Configura el master
+    180                  TMR04 = 0x0801U;   //master PWM
+   \   0000AC 300108                MOVW      AX, #0x801
+   \   0000AF BF9801                MOVW      0x198, AX
+    181                  TDR04 = 0x0C7FU;   //Periodo
+   \   0000B2 CB687F0C              MOVW      0xFFF68, #0xC7F
+    182                  TOM0 &= ~ 0x0010U; //TO04
+   \   0000B6 AFBE01                MOVW      AX, 0x1BE
+   \   0000B9 5CFF                  AND       A, #0xFF
+   \   0000BB 08                    XCH       A, X
+   \   0000BC 5CEF                  AND       A, #0xEF
+   \   0000BE 08                    XCH       A, X
+   \   0000BF BFBE01                MOVW      0x1BE, AX
+    183                  TOL0 &= ~ 0x0010U; //TO04 active high
+   \   0000C2 AFBC01                MOVW      AX, 0x1BC
+   \   0000C5 5CFF                  AND       A, #0xFF
+   \   0000C7 08                    XCH       A, X
+   \   0000C8 5CEF                  AND       A, #0xEF
+   \   0000CA 08                    XCH       A, X
+   \   0000CB BFBC01                MOVW      0x1BC, AX
+    184                  TO0  &= ~ 0x0010U; //TO04
+   \   0000CE AFB801                MOVW      AX, 0x1B8
+   \   0000D1 5CFF                  AND       A, #0xFF
+   \   0000D3 08                    XCH       A, X
+   \   0000D4 5CEF                  AND       A, #0xEF
+   \   0000D6 08                    XCH       A, X
+   \   0000D7 BFB801                MOVW      0x1B8, AX
+    185                  TOE0 &= ~ 0x0010U; //TO04
+   \   0000DA 36BA01                MOVW      HL, #0x1BA
+   \   0000DD 71C3                  CLR1      [HL].4
+    186                   //Configura el slave
+    187                  TMR05 = 0x0409U;
+   \   0000DF 300904                MOVW      AX, #0x409
+   \   0000E2 BF9A01                MOVW      0x19A, AX
+    188                  TDR05 = 0x0640U; //duty cycle 50%
+   \   0000E5 CB6A4006              MOVW      0xFFF6A, #0x640
+    189                  TOM0 |= 0x0020U; //TO05
+   \   0000E9 AFBE01                MOVW      AX, 0x1BE
+   \   0000EC 6C00                  OR        A, #0x0
+   \   0000EE 08                    XCH       A, X
+   \   0000EF 6C20                  OR        A, #0x20
+   \   0000F1 08                    XCH       A, X
+   \   0000F2 BFBE01                MOVW      0x1BE, AX
+    190                  TOL0 &= ~ 0x0020U; //TO05 active high
+   \   0000F5 AFBC01                MOVW      AX, 0x1BC
+   \   0000F8 5CFF                  AND       A, #0xFF
+   \   0000FA 08                    XCH       A, X
+   \   0000FB 5CDF                  AND       A, #0xDF
+   \   0000FD 08                    XCH       A, X
+   \   0000FE BFBC01                MOVW      0x1BC, AX
+    191                  TO0  &= ~ 0x0020U; //TO05
+   \   000101 AFB801                MOVW      AX, 0x1B8
+   \   000104 5CFF                  AND       A, #0xFF
+   \   000106 08                    XCH       A, X
+   \   000107 5CDF                  AND       A, #0xDF
+   \   000109 08                    XCH       A, X
+   \   00010A BFB801                MOVW      0x1B8, AX
+    192                  TOE0 |= 0x0020U; //TO05
+   \   00010D 36BA01                MOVW      HL, #0x1BA
+   \   000110 71D2                  SET1      [HL].5
+    193                  
+    194                 // P05
+    195                  P0 &= 0xDFU;
+   \   000112 715300                CLR1      S:0xFFF00.5
+    196          	PM0 &= 0xDFU;
+   \   000115 715B20                CLR1      0xFFF20.5
+    197                  
+    198                  
+    199                  
+    200                  //Start PWM
+    201                  TMIF04 = 0U;	/* clear INTTM04 interrupt flag */
+   \   000118 717BE3                CLR1      0xFFFE3.7
+    202          	TMMK04 = 1U;	/* enable INTTM04 interrupt */
+   \   00011B 717AE7                SET1      0xFFFE7.7
+    203          	TMIF05 = 0U;	/* clear INTTM05 interrupt flag */
+   \   00011E 710BD0                CLR1      0xFFFD0.0
+    204          	TMMK05 = 1U;	/* enable INTTM05 interrupt */
+   \   000121 710AD4                SET1      0xFFFD4.0
+    205          	TOE0 |= 0x0020U;
+   \   000124 36BA01                MOVW      HL, #0x1BA
+   \   000127 71D2                  SET1      [HL].5
+    206          	TS0  |= 0x0030U;
+   \   000129 AFB201                MOVW      AX, 0x1B2
+   \   00012C 6C00                  OR        A, #0x0
+   \   00012E 08                    XCH       A, X
+   \   00012F 6C30                  OR        A, #0x30
+   \   000131 08                    XCH       A, X
+   \   000132 BFB201                MOVW      0x1B2, AX
+    207                  
+    208            
+    209                    
+    210                   // Draw text on screen 
+    211                    LCDFont(FONT_SMALL);
+   \   000135 F1                    CLRB      A
+   \   000136 FD....                CALL      LCDFont
+    212                    LCDString("Hola",0,0);
+   \   000139 F2                    CLRB      C
+   \   00013A F3                    CLRB      B
+   \   00013B 30....                MOVW      AX, #`?<Constant "Hola">`
+   \   00013E FD....                CALL      LCDString
+    213                   //LCDFont(FONT_LARGE);
+    214                  // LCDDrawBlock( 0, (LCD_H/2)-4, LCD_W-8, (LCD_H/2)-4); // x-axis
+    215                  // LCDDrawBlock( (LCD_W/2)-4, 0, (LCD_W/2)-4, LCD_H-9); // y-axis
+    216                   
+    217                   
+    218                   delay_ms(1500);
+   \   000141 30DC05                MOVW      AX, #0x5DC
+   \   000144 FD....                CALL      delay_ms
+    219                   
+    220                   
+    221                   
+    222                   
+    223                   
+    224            //*************************************************************************
+    225                while(1)
+    226                {
+    227                  // sprintf((char const*)buffer,"Valor = %03d",valor++);
+    228                   //LCDStringLine(buffer,LCDCenter(7),3);
+    229                  //LCDPrintf(1,2,"Valor = %03d",valor++);
+    230                //  CambiaDT_CH45(DT);
+    231                //  LED_VERDE3_ON 
+    232                //  delay_ms(500);
+    233                //  LED_VERDE3_OFF 
+    234                  
+    235                
+    236                  
+    237                      buffer_reloj[0] = (HOUR  >> 4) + 0x30; 
+   \                     ??main_2:
+   \   000147 8E94                  MOV       A, 0xFFF94
+   \   000149 314A                  SHR       A, 0x4
+   \   00014B 0C30                  ADD       A, #0x30
+   \   00014D 9800                  MOV       [SP], A
+    238                      buffer_reloj[1] = (HOUR & 0x0F) + 0x30;
+   \   00014F 8E94                  MOV       A, 0xFFF94
+   \   000151 5C0F                  AND       A, #0xF
+   \   000153 0C30                  ADD       A, #0x30
+   \   000155 9801                  MOV       [SP+0x01], A
+    239                      
+    240                      
+    241                      buffer_reloj[4] = (MIN & 0x0F) + 0x30;
+   \   000157 8E93                  MOV       A, 0xFFF93
+   \   000159 5C0F                  AND       A, #0xF
+   \   00015B 0C30                  ADD       A, #0x30
+   \   00015D 9804                  MOV       [SP+0x04], A
+    242                      buffer_reloj[3] = (MIN >> 4) + 0x30;
+   \   00015F 8E93                  MOV       A, 0xFFF93
+   \   000161 314A                  SHR       A, 0x4
+   \   000163 0C30                  ADD       A, #0x30
+   \   000165 9803                  MOV       [SP+0x03], A
+    243          
+    244                      buffer_reloj[6] = (SEC >> 4) + 0x30;
+   \   000167 8E92                  MOV       A, 0xFFF92
+   \   000169 314A                  SHR       A, 0x4
+   \   00016B 0C30                  ADD       A, #0x30
+   \   00016D 9806                  MOV       [SP+0x06], A
+    245                      buffer_reloj[7] = (SEC & 0x0F) + 0x30;
+   \   00016F 8E92                  MOV       A, 0xFFF92
+   \   000171 5C0F                  AND       A, #0xF
+   \   000173 0C30                  ADD       A, #0x30
+   \   000175 9807                  MOV       [SP+0x07], A
+    246                      
+    247                      LCDString((const char*)buffer_reloj,1,10);
+   \   000177 520A                  MOV       C, #0xA
+   \   000179 E3                    ONEB      B
+   \   00017A AEF8                  MOVW      AX, SP
+   \   00017C FD....                CALL      LCDString
+    248                  
+    249                   if (got_packet) {
+   \   00017F D5....                CMP0      N:got_packet
+   \   000182 DDC3                  BZ        ??main_2
+    250                          
+    251                           comando=decodeIR();
+   \   000184 FD....                CALL      decodeIR
+   \   000187 72                    MOV       C, A
+    252                        
+    253                          
+    254                   /*      mask = 0x01;
+    255                         for ( i=2; i<18; i++) {
+    256                     
+    257                           if (payload[i] == 1){
+    258                             
+    259                               addr = addr | mask;
+    260                            }   
+    261                          mask <<= 1;
+    262                          }
+    263          
+    264                         mask = 0x01;
+    265                         for (i=19; i<=34; i++)
+    266                         {
+    267                           if (payload[i] == 1)
+    268                            cmd = cmd | mask;
+    269                         mask <<= 1;
+    270                         }*/
+    271                         
+    272                         startIR();
+   \   000188 FD....                CALL      startIR
+    273          
+    274                          
+    275                          // Print the command to the LCD 
+    276                          LCDPrintf(2, LCDCenter(4), "0x%x ", comando);
+   \   00018B 5104                  MOV       A, #0x4
+   \   00018D FD....                CALL      LCDCenter
+   \   000190 73                    MOV       B, A
+   \   000191 62                    MOV       A, C
+   \   000192 70                    MOV       X, A
+   \   000193 F1                    CLRB      A
+   \   000194 C1                    PUSH      AX
+   \   000195 34....                MOVW      DE, #`?<Constant "0x%x ">`
+   \   000198 5102                  MOV       A, #0x2
+   \   00019A FD....                CALL      LCDPrintf
+   \   00019D 1002                  ADDW      SP, #0x2
+   \   00019F EFA6                  BR        S:??main_2
+   \   0001A1                       REQUIRE ?CLRL78_V1_0_L00
+   \   0001A1                       REQUIRE PIOR
+   \   0001A1                       REQUIRE CMC
+   \   0001A1                       REQUIRE OSTS
+   \   0001A1                       REQUIRE _A_CSC
+   \   0001A1                       REQUIRE _A_OSTC
+   \   0001A1                       REQUIRE _A_CKC
+   \   0001A1                       REQUIRE OSMC
+   \   0001A1                       REQUIRE _A_PM5
+   \   0001A1                       REQUIRE _A_P5
+   \   0001A1                       REQUIRE _A_P0
+   \   0001A1                       REQUIRE _A_PM0
+   \   0001A1                       REQUIRE _A_PER0
+   \   0001A1                       REQUIRE ITMC
+   \   0001A1                       REQUIRE _A_MK1
+   \   0001A1                       REQUIRE _A_IF1
+   \   0001A1                       REQUIRE _A_PR11
+   \   0001A1                       REQUIRE _A_PR01
+   \   0001A1                       REQUIRE TPS0
+   \   0001A1                       REQUIRE _A_TT0
+   \   0001A1                       REQUIRE _A_MK2
+   \   0001A1                       REQUIRE _A_IF2
+   \   0001A1                       REQUIRE TMR04
+   \   0001A1                       REQUIRE TDR04
+   \   0001A1                       REQUIRE _A_TOM0
+   \   0001A1                       REQUIRE _A_TOL0
+   \   0001A1                       REQUIRE _A_TO0
+   \   0001A1                       REQUIRE _A_TOE0
+   \   0001A1                       REQUIRE TMR05
+   \   0001A1                       REQUIRE TDR05
+   \   0001A1                       REQUIRE _A_TS0
+   \   0001A1                       REQUIRE HOUR
+   \   0001A1                       REQUIRE MIN
+   \   0001A1                       REQUIRE SEC
+    277                          
+    278                         
+    279                         
+    280                      }
+    281                  
+    282                  
+    283                  //delay_ms(500);
+    284                 
+    285                }  
+    286            
+    287            
+    288            
+    289           
+    290          }
+    291          //***********************************************************************
+    292          #pragma vector = INTTM04_vect
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    293          __interrupt void TAUO_Canal4_INT(void)
+   \                     TAUO_Canal4_INT:
+    294          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C1                    PUSH      AX
+   \   000001                       ; Auto size: 0
+    295            
+    296            static unsigned char count = 0;
+    297            
+    298            if(++count > 100)
+   \   000001 8F....                MOV       A, N:??count
+   \   000004 81                    INC       A
+   \   000005 9F....                MOV       N:??count, A
+   \   000008 4C65                  CMP       A, #0x65
+   \   00000A 61C8                  SKC
+    299            {
+    300              P1=0;
+   \   00000C F401                  CLRB      S:0xFFF01
+    301            
+    302            }
+    303            TMIF04 = 0U;
+   \                     ??TAUO_Canal4_INT_0:
+   \   00000E 717BE3                CLR1      0xFFFE3.7
+    304          }  
+   \   000011 C0                    POP       AX
+   \   000012 61FC                  RETI      
+   \   000014                       REQUIRE ?CLRL78_V1_0_L00
+   \   000014                       REQUIRE _A_P1
+   \   000014                       REQUIRE _A_IF1
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+   \                     ??count:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+    305          
+    306          
+    307          //***********************************************************************
+    308          
+    309          #pragma vector = INTIT_vect
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    310          __interrupt void MD_INTIT(void)
+   \                     MD_INTIT:
+    311          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C1                    PUSH      AX
+   \   000001 C7                    PUSH      HL
+   \   000002                       ; Auto size: 0
+    312            static int value=0;
+    313            static int valor=0;
+    314            static int valor1=0;
+    315            
+    316            
+    317            if(++value > 10)  //100ms * 10 = 1 segundo
+   \   000002 AF....                MOVW      AX, N:??value
+   \   000005 A1                    INCW      AX
+   \   000006 BF....                MOVW      N:??value, AX
+   \   000009 7C80                  XOR       A, #0x80
+   \   00000B 440B80                CMPW      AX, #0x800B
+   \   00000E DC4B                  BC        ??MD_INTIT_1
+    318            {
+    319              P5 ^= 0x30;  //P55 & P54
+   \   000010 7A0530                XOR       S:0xFFF05, #0x30
+    320              
+    321              if(flag)
+   \   000013 D5....                CMP0      N:flag
+   \   000016 DD22                  BZ        ??MD_INTIT_2
+    322              {  
+    323                DT += 5;
+   \   000018 FB....                MOVW      HL, N:DT
+   \   00001B 17                    MOVW      AX, HL
+   \   00001C 040500                ADDW      AX, #0x5
+   \   00001F 16                    MOVW      HL, AX
+   \   000020 17                    MOVW      AX, HL
+   \   000021 BF....                MOVW      N:DT, AX
+   \   000024 16                    MOVW      HL, AX
+    324                if(DT > 99)
+   \   000025 AF....                MOVW      AX, N:DT
+   \   000028 7C80                  XOR       A, #0x80
+   \   00002A 446480                CMPW      AX, #0x8064
+   \   00002D DC25                  BC        ??MD_INTIT_3
+    325                {  
+    326                 DT=99; 
+   \   00002F 306300                MOVW      AX, #0x63
+   \   000032 BF....                MOVW      N:DT, AX
+    327                 flag = 0;
+   \   000035 F5....                CLRB      N:flag
+   \   000038 EF1A                  BR        S:??MD_INTIT_3
+    328                } 
+    329              } 
+    330               else
+    331               {
+    332                 DT -= 5;
+   \                     ??MD_INTIT_2:
+   \   00003A FB....                MOVW      HL, N:DT
+   \   00003D 17                    MOVW      AX, HL
+   \   00003E 04FBFF                ADDW      AX, #0xFFFB
+   \   000041 16                    MOVW      HL, AX
+   \   000042 17                    MOVW      AX, HL
+   \   000043 BF....                MOVW      N:DT, AX
+   \   000046 16                    MOVW      HL, AX
+    333                if(DT < 0)
+   \   000047 AF....                MOVW      AX, N:DT
+   \   00004A 317507                BF        A.7, ??MD_INTIT_3
+    334                {  
+    335                 DT=0; 
+   \   00004D F6                    CLRW      AX
+   \   00004E BF....                MOVW      N:DT, AX
+    336                 flag = 1;
+   \   000051 E5....                ONEB      N:flag
+    337                }  
+    338                 
+    339               } 
+    340                 
+    341              value=0;
+   \                     ??MD_INTIT_3:
+   \   000054 F6                    CLRW      AX
+   \   000055 BF....                MOVW      N:??value, AX
+    342              ITIF = 0U;	
+   \   000058 712BE3                CLR1      0xFFFE3.2
+    343            }  
+    344            
+    345            if(++valor > 100)
+   \                     ??MD_INTIT_1:
+   \   00005B AF....                MOVW      AX, N:??valor
+   \   00005E A1                    INCW      AX
+   \   00005F BF....                MOVW      N:??valor, AX
+   \   000062 7C80                  XOR       A, #0x80
+   \   000064 446580                CMPW      AX, #0x8065
+   \   000067 DC0A                  BC        ??MD_INTIT_4
+    346            {
+    347              LED_VERDE1_ON //P52
+   \   000069 712305                CLR1      S:0xFFF05.2
+    348              valor=0;
+   \   00006C F6                    CLRW      AX
+   \   00006D BF....                MOVW      N:??valor, AX
+    349              ITIF = 0U;	
+   \   000070 712BE3                CLR1      0xFFFE3.2
+    350            }  
+    351            
+    352            if(++valor1 > 150)
+   \                     ??MD_INTIT_4:
+   \   000073 AF....                MOVW      AX, N:??valor1
+   \   000076 A1                    INCW      AX
+   \   000077 BF....                MOVW      N:??valor1, AX
+   \   00007A 7C80                  XOR       A, #0x80
+   \   00007C 449780                CMPW      AX, #0x8097
+   \   00007F DC0A                  BC        ??MD_INTIT_5
+    353            {
+    354              LED_VERDE1_OFF //P52
+   \   000081 712205                SET1      S:0xFFF05.2
+    355             
+    356              valor1=0;
+   \   000084 F6                    CLRW      AX
+   \   000085 BF....                MOVW      N:??valor1, AX
+    357              ITIF = 0U;	
+   \   000088 712BE3                CLR1      0xFFFE3.2
+    358            }  
+    359            
+    360          }
+   \                     ??MD_INTIT_5:
+   \   00008B C6                    POP       HL
+   \   00008C C0                    POP       AX
+   \   00008D 61FC                  RETI      
+   \   00008F                       REQUIRE ?CLRL78_V1_0_L00
+   \   00008F                       REQUIRE _A_P5
+   \   00008F                       REQUIRE _A_IF1
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+   \                     ??value:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+   \                     ??valor:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+   \                     ??valor1:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment INTVEC, offset 0x38, root
+   \                     `??MD_INTIT??INTVEC 56`:
+   \   000038 ....                  DW MD_INTIT
+
+   \                                 In  segment INTVEC, offset 0x42, root
+   \                     `??TAUO_Canal4_INT??INTVEC 66`:
+   \   000042 ....                  DW TAUO_Canal4_INT
+
+   \                                 In  segment NEAR_ID, align 1, align-sorted
+   \                     `?<Initializer for flag>`:
+   \   000000 01                    DB 1
+
+   \                                 In  segment NEAR_CONST, align 2
+   \                     `?<Constant "00:00:00">`:
+   \   000000 30303A30303A          DB "00:00:00"
+   \   000009 00                    DB 0
+
+   \                                 In  segment NEAR_CONST, align 2
+   \                     `?<Constant "Hola">`:
+   \   000000 486F6C6100            DB "Hola"
+   \   000005 00                    DB 0
+
+   \                                 In  segment NEAR_CONST, align 2
+   \                     `?<Constant "0x%x ">`:
+   \   000000 307825782000          DB "0x%x "
+
+   Segment part sizes:
+
+     Function/Label               Bytes
+     --------------               -----
+     _A_P0                           1
+     _A_P1                           1
+     _A_P5                           1
+     _A_PM0                          1
+     _A_PM5                          1
+     TDR04                           2
+     TDR05                           2
+     ITMC                            2
+     SEC                             1
+     MIN                             1
+     HOUR                            1
+     CMC                             1
+     _A_CSC                          1
+     _A_OSTC                         1
+     OSTS                            1
+     _A_CKC                          1
+     _A_IF2                          2
+     _A_MK2                          2
+     _A_IF1                          2
+     _A_MK1                          2
+     _A_PR01                         2
+     _A_PR11                         2
+     PIOR                            1
+     _A_PER0                         1
+     OSMC                            1
+     TMR04                           2
+     TMR05                           2
+     _A_TS0                          2
+     _A_TT0                          2
+     TPS0                            2
+     _A_TO0                          2
+     _A_TOE0                         2
+     _A_TOL0                         2
+     _A_TOM0                         2
+     opbyte0                         1
+     opbyte1                         1
+     opbyte2                         1
+     opbyte3                         1
+     secuid                         10
+     DT                              2
+     flag                            1
+     CambiaDT_CH45                  62
+     main                          417
+     TAUO_Canal4_INT                20
+     count                           1
+     MD_INTIT                      143
+     value                           2
+     valor                           2
+     valor1                          2
+     ??MD_INTIT??INTVEC 56           2
+     ??TAUO_Canal4_INT??INTVEC 66    2
+     ?<Initializer for flag>         1
+     ?<Constant "00:00:00">         10
+     ?<Constant "Hola">              6
+     ?<Constant "0x%x ">             6
+
+ 
+ 642 bytes in segment CODE
+   4 bytes in segment INTVEC
+  49 bytes in segment NEAR_A
+  22 bytes in segment NEAR_CONST
+   1 byte  in segment NEAR_I
+   1 byte  in segment NEAR_ID
+   9 bytes in segment NEAR_Z
+   4 bytes in segment OPTBYTE
+   3 bytes in segment SADDR_A
+  10 bytes in segment SECUID
+ 
+ 642 bytes of CODE  memory (+  4 bytes shared)
+  37 bytes of CONST memory
+  10 bytes of DATA  memory (+ 52 bytes shared)
+
+Errors: none
+Warnings: 1

@@ -1,0 +1,153 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 27/Jul/2012  19:39:36 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  D:\DESARROLLOS\prbRL78G13\delay.c                        #
+#    Command line =  D:\DESARROLLOS\prbRL78G13\delay.c --core rl78_1          #
+#                    --code_model near --data_model near                      #
+#                    --near_const_location rom0 -o                            #
+#                    D:\DESARROLLOS\prbRL78G13\Debug\Obj\ --dlib_config       #
+#                    "D:\Archivos de programa\IAR Systems\Embedded Workbench  #
+#                    6.0 Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse     #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN D:\DESARROLLOS\prbRL78G13\Debug\List\ -I    #
+#                    D:\DESARROLLOS\prbRL78G13\user_include\                  #
+#    List file    =  D:\DESARROLLOS\prbRL78G13\Debug\List\delay.lst           #
+#    Object file  =  D:\DESARROLLOS\prbRL78G13\Debug\Obj\delay.r87            #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\DESARROLLOS\prbRL78G13\delay.c
+      1          #include "delay.h"
+      2          
+      3          #define GetInstructionClock() (12000000U)
+      4          
+
+   \                                 In  segment CODE, align 1, keep-with-next
+      5          void delay_10us(int  us)
+   \                     delay_10us:
+      6          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001                       ; Auto size: 4
+   \   000001 2004                  SUBW      SP, #0x4
+      7          	volatile unsigned long _dcnt;
+      8            
+      9          
+     10          	_dcnt = us *((unsigned long)(0.00001/(1.0/GetInstructionClock())/50));
+   \   000003 360000                MOVW      HL, #0x0
+   \   000006 C7                    PUSH      HL
+   \   000007 360200                MOVW      HL, #0x2
+   \   00000A C7                    PUSH      HL
+   \   00000B 12                    MOVW      BC, AX
+   \   00000C 31FF                  SARW      AX, 0xF
+   \   00000E 33                    XCHW      AX, BC
+   \   00000F FD....                CALL      N:?L_MUL_L03
+   \   000012 FBF8FF                MOVW      HL, SP
+   \   000015 BB                    MOVW      [HL], AX
+   \   000016 13                    MOVW      AX, BC
+   \   000017 BC02                  MOVW      [HL+0x02], AX
+   \   000019 12                    MOVW      BC, AX
+     11              //    _dcnt = us  *   ((unsigned long) 12 *(0.00001/( 1.0/GetInstructionClock())));
+     12          	//while(_dcnt--){}
+     13            
+     14              while (--_dcnt)
+   \                     ??delay_10us_0:
+   \   00001A AEF8                  MOVW      AX, SP
+   \   00001C 16                    MOVW      HL, AX
+   \   00001D AC02                  MOVW      AX, [HL+0x02]
+   \   00001F 12                    MOVW      BC, AX
+   \   000020 AB                    MOVW      AX, [HL]
+   \   000021 240100                SUBW      AX, #0x1
+   \   000024 61D8                  SKNC
+   \   000026 B3                    DECW      BC
+   \                     ??delay_10us_1:
+   \   000027 33                    XCHW      AX, BC
+   \   000028 240000                SUBW      AX, #0x0
+   \   00002B 33                    XCHW      AX, BC
+   \   00002C FBF8FF                MOVW      HL, SP
+   \   00002F BB                    MOVW      [HL], AX
+   \   000030 33                    XCHW      AX, BC
+   \   000031 BC02                  MOVW      [HL+0x02], AX
+   \   000033 440000                CMPW      AX, #0x0
+   \   000036 13                    MOVW      AX, BC
+   \   000037 61F8                  SKNZ
+   \   000039 440000                CMPW      AX, #0x0
+   \                     ??delay_10us_2:
+   \   00003C DFDC                  BNZ       ??delay_10us_0
+     15              {
+     16                
+     17              }  
+     18          	
+     19          	
+     20          }
+   \   00003E 1004                  ADDW      SP, #0x4
+   \   000040 C2                    POP       BC
+   \   000041 D7                    RET       
+   \   000042                       REQUIRE ?CLRL78_V1_0_L00
+     21          
+     22          //*****************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     23          void delay_ms(int ms)
+   \                     delay_ms:
+     24          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001 C5                    PUSH      DE
+   \   000002                       ; Auto size: 0
+   \   000002 14                    MOVW      DE, AX
+     25              unsigned char i;
+     26              while(ms--)
+   \                     ??delay_ms_0:
+   \   000003 15                    MOVW      AX, DE
+   \   000004 14                    MOVW      DE, AX
+   \   000005 B5                    DECW      DE
+   \   000006 440000                CMPW      AX, #0x0
+   \   000009 DD10                  BZ        ??delay_ms_1
+     27              {
+     28                  i=4;
+   \   00000B 5304                  MOV       B, #0x4
+     29                  while(i--)
+   \                     ??delay_ms_2:
+   \   00000D 63                    MOV       A, B
+   \   00000E 73                    MOV       B, A
+   \   00000F 93                    DEC       B
+   \   000010 D1                    CMP0      A
+   \   000011 DDF0                  BZ        ??delay_ms_0
+     30                  {
+     31                      delay_10us(25);
+   \   000013 301900                MOVW      AX, #0x19
+   \   000016 FD....                CALL      delay_10us
+   \   000019 EFF2                  BR        S:??delay_ms_2
+     32                  }
+     33              }
+     34          }
+   \                     ??delay_ms_1:
+   \   00001B C4                    POP       DE
+   \   00001C C2                    POP       BC
+   \   00001D D7                    RET       
+   \   00001E                       REQUIRE ?CLRL78_V1_0_L00
+
+   Segment part sizes:
+
+     Function/Label Bytes
+     -------------- -----
+     delay_10us       66
+     delay_ms         30
+
+ 
+ 96 bytes in segment CODE
+ 
+ 96 bytes of CODE memory
+
+Errors: none
+Warnings: none

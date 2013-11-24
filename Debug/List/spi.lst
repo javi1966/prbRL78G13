@@ -1,0 +1,624 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 27/Jul/2012  19:39:34 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  D:\DESARROLLOS\prbRL78G13\spi.c                          #
+#    Command line =  D:\DESARROLLOS\prbRL78G13\spi.c --core rl78_1            #
+#                    --code_model near --data_model near                      #
+#                    --near_const_location rom0 -o                            #
+#                    D:\DESARROLLOS\prbRL78G13\Debug\Obj\ --dlib_config       #
+#                    "D:\Archivos de programa\IAR Systems\Embedded Workbench  #
+#                    6.0 Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse     #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN D:\DESARROLLOS\prbRL78G13\Debug\List\ -I    #
+#                    D:\DESARROLLOS\prbRL78G13\user_include\                  #
+#    List file    =  D:\DESARROLLOS\prbRL78G13\Debug\List\spi.lst             #
+#    Object file  =  D:\DESARROLLOS\prbRL78G13\Debug\Obj\spi.r87              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\DESARROLLOS\prbRL78G13\spi.c
+      1          #include <stdint.h>
+      2          #include "ior5f100le.h"
+
+   \                                 In  segment SADDR_A, at 0xfff00
+   \   union <unnamed> volatile __saddr _A_P0
+   \                     _A_P0:
+   \   000000                       DS 1
+
+   \                                 In  segment SADDR_A, at 0xfff0d
+   \   union <unnamed> volatile __saddr _A_P13
+   \                     _A_P13:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff20
+   \   union <unnamed> volatile __sfr _A_PM0
+   \                     _A_PM0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff44
+   \   union <unnamed> volatile __sfr __no_bit_access _A_SDR02
+   \                     _A_SDR02:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe2
+   \   union <unnamed> volatile __sfr _A_IF1
+   \                     _A_IF1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe6
+   \   union <unnamed> volatile __sfr _A_MK1
+   \                     _A_MK1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffea
+   \   union <unnamed> volatile __sfr _A_PR01
+   \                     _A_PR01:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffee
+   \   union <unnamed> volatile __sfr _A_PR11
+   \                     _A_PR11:
+   \   000000                       DS 2
+      3          #include "ior5f100le_ext.h"
+
+   \                                 In  segment NEAR_A, at 0xf0060
+   \   union <unnamed> volatile _A_PMC0
+   \                     _A_PMC0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf00f0
+   \   union <unnamed> volatile _A_PER0
+   \                     _A_PER0:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0104
+   \   union <unnamed> const volatile __no_bit_access _A_SSR02
+   \                     _A_SSR02:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf010c
+   \   union <unnamed> volatile __no_bit_access _A_SIR02
+   \                     _A_SIR02:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf0114
+   \   unsigned short volatile __no_bit_access SMR02
+   \                     SMR02:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf011c
+   \   unsigned short volatile __no_bit_access SCR02
+   \                     SCR02:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf0122
+   \   union <unnamed> volatile _A_SS0
+   \                     _A_SS0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf0124
+   \   union <unnamed> volatile _A_ST0
+   \                     _A_ST0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf0126
+   \   union <unnamed> volatile __no_bit_access _A_SPS0
+   \                     _A_SPS0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf0128
+   \   unsigned short volatile __no_bit_access SO0
+   \                     SO0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf012a
+   \   union <unnamed> volatile _A_SOE0
+   \                     _A_SOE0:
+   \   000000                       DS 2
+      4          #include "intrinsics.h"
+      5          #include "spi.h"
+      6          
+      7          
+      8          #define NOP	__no_operation
+      9          
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     10          volatile unsigned char   *gpCsi10RxAddress;   /* csi10 receive buffer address */
+   \                     gpCsi10RxAddress:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     11          volatile unsigned short   gCsi10RxLen;      /* csi10 receive data length */
+   \                     gCsi10RxLen:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     12          volatile unsigned short  gCsi10RxCnt;      /* csi10 receive data count */
+   \                     gCsi10RxCnt:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     13          volatile unsigned char   *gpCsi10TxAddress;   /* csi10 send buffer address */
+   \                     gpCsi10TxAddress:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     14          volatile unsigned short   gCsi10TxLen;      /* csi10 send data length */
+   \                     gCsi10TxLen:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     15          volatile unsigned short   gCsi10TxCnt;      /* csi10 send data count */
+   \                     gCsi10TxCnt:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+     16          /* Start user code for global. Do not edit comment generated here */
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+     17          volatile unsigned char  G_SPI_SendingData = 0;
+   \                     G_SPI_SendingData:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+     18          volatile unsigned char  G_SPI_ReceivingData = 0;
+   \                     G_SPI_ReceivingData:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+     19          
+     20          
+     21          //*******************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     22          void spi10_Init(void)
+   \                     spi10_Init:
+     23          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C5                    PUSH      DE
+   \   000001                       ; Auto size: 0
+     24            
+     25             int i = 0;
+   \   000001 F6                    CLRW      AX
+   \   000002 14                    MOVW      DE, AX
+     26             
+     27          	SAU0EN = 1U;	/* supply SAU0 clock */
+   \   000003 36F000                MOVW      HL, #0xF0
+   \   000006 71A2                  SET1      [HL].2
+     28          	NOP();
+   \   000008 00                    NOP       
+     29          	NOP();
+   \   000009 00                    NOP       
+     30          	NOP();
+   \   00000A 00                    NOP       
+     31          	NOP();
+   \   00000B 00                    NOP       
+     32          	SPS0 =0x0002U;
+   \   00000C 300200                MOVW      AX, #0x2
+   \   00000F BF2601                MOVW      0x126, AX
+     33                  
+     34                  
+     35                   //RESET I/0
+     36          	//#warning RESET-IO must be inverted for actual HW
+     37          	P13 |= (1<<0); // Assert P130 (#RESET-IO)
+   \   000012 71020D                SET1      S:0xFFF0D.0
+     38                  for (i=0;i<10000;i++);
+   \   000015 F6                    CLRW      AX
+   \   000016 14                    MOVW      DE, AX
+   \   000017 EF01                  BR        S:??spi10_SendEndCallback_0
+   \                     ??spi10_Init_0:
+   \   000019 A5                    INCW      DE
+   \                     ??spi10_SendEndCallback_0:
+   \   00001A 15                    MOVW      AX, DE
+   \   00001B 7C80                  XOR       A, #0x80
+   \   00001D 4410A7                CMPW      AX, #0xA710
+   \   000020 DCF7                  BC        ??spi10_Init_0
+     39                  P13 &= ~(1<<0);  // Deassert P130 (#RESET-IO)
+   \   000022 71030D                CLR1      S:0xFFF0D.0
+     40                  for (i=0;i<10000;i++);
+   \   000025 F6                    CLRW      AX
+   \   000026 14                    MOVW      DE, AX
+   \   000027 EF01                  BR        S:??spi10_SendEndCallback_1
+   \                     ??spi10_Init_1:
+   \   000029 A5                    INCW      DE
+   \                     ??spi10_SendEndCallback_1:
+   \   00002A 15                    MOVW      AX, DE
+   \   00002B 7C80                  XOR       A, #0x80
+   \   00002D 4410A7                CMPW      AX, #0xA710
+   \   000030 DCF7                  BC        ??spi10_Init_1
+     41                  
+     42          	ST0 |= 0x0004U;	/* disable CSI10 ,canal 2*/
+   \   000032 362401                MOVW      HL, #0x124
+   \   000035 71A2                  SET1      [HL].2
+     43          	CSIMK10 = 1U;	/* disable INTCSI10 interrupt */
+   \   000037 710AE6                SET1      0xFFFE6.0
+     44          	CSIIF10 = 0U;	/* clear INTCSI10 interrupt flag */
+   \   00003A 710BE2                CLR1      0xFFFE2.0
+     45          	/* Set INTCSI10 low priority */
+     46          	CSIPR110 = 0U;
+   \   00003D 710BEE                CLR1      0xFFFEE.0
+     47          	CSIPR010 = 0U;
+   \   000040 710BEA                CLR1      0xFFFEA.0
+     48          	SIR02 =0x0007U;	    /* clear error flag */
+   \   000043 300700                MOVW      AX, #0x7
+   \   000046 BF0C01                MOVW      0x10C, AX
+     49          	SMR02 = 0x0020U;    //Modo SPI
+   \   000049 302000                MOVW      AX, #0x20
+   \   00004C BF1401                MOVW      0x114, AX
+     50          	SCR02 = 0xC007U;    //8 bits,Tx y RX
+   \   00004F 3007C0                MOVW      AX, #0xC007
+   \   000052 BF1C01                MOVW      0x11C, AX
+     51          	SDR02 = 0xFE00U;    //divisor fclk
+   \   000055 CB4400FE              MOVW      0xFFF44, #0xFE00
+     52          	SO0 |= 0x0400;	    /* CSI10 clock initial level */
+   \   000059 AF2801                MOVW      AX, 0x128
+   \   00005C 6C04                  OR        A, #0x4
+   \   00005E 08                    XCH       A, X
+   \   00005F 6C00                  OR        A, #0x0
+   \   000061 08                    XCH       A, X
+   \   000062 BF2801                MOVW      0x128, AX
+     53          	SO0 &= ~0x0004U;	/* CSI10 SO initial level */
+   \   000065 AF2801                MOVW      AX, 0x128
+   \   000068 5CFF                  AND       A, #0xFF
+   \   00006A 08                    XCH       A, X
+   \   00006B 5CFB                  AND       A, #0xFB
+   \   00006D 08                    XCH       A, X
+   \   00006E BF2801                MOVW      0x128, AX
+     54          	SOE0 |= 0x0004U;	/* enable CSI10 output */
+   \   000071 362A01                MOVW      HL, #0x12A
+   \   000074 71A2                  SET1      [HL].2
+     55          	/* Set SI10 pin , P03*/
+     56          	PMC0 &= 0xF7U;
+   \   000076 366000                MOVW      HL, #0x60
+   \   000079 71B3                  CLR1      [HL].3
+     57          	PM0 |= 0x08U;
+   \   00007B 713A20                SET1      0xFFF20.3
+     58          	/* Set SO10 pin , P02*/
+     59          	P0 |= 0x04U;
+   \   00007E 712200                SET1      S:0xFFF00.2
+     60          	PMC0 &= 0xFBU;
+   \   000081 366000                MOVW      HL, #0x60
+   \   000084 71A3                  CLR1      [HL].2
+     61          	PM0 &= 0xFBU;
+   \   000086 712B20                CLR1      0xFFF20.2
+     62          	/* Set SCK10 pin ,P04*/
+     63          	P0 |= 0x10U;
+   \   000089 714200                SET1      S:0xFFF00.4
+     64          	PM0 &= 0xEFU;
+   \   00008C 714B20                CLR1      0xFFF20.4
+     65                  
+     66                  //Start SPI
+     67                  
+     68                  CSIIF10 = 0U;	/* clear INTCSI10 interrupt flag */
+   \   00008F 710BE2                CLR1      0xFFFE2.0
+     69          	CSIMK10 = 0U;	/* enable INTCSI10 */
+   \   000092 710BE6                CLR1      0xFFFE6.0
+     70          	SO0 |= 0x0400U;  	/* CSI10 clock initial level */
+   \   000095 AF2801                MOVW      AX, 0x128
+   \   000098 6C04                  OR        A, #0x4
+   \   00009A 08                    XCH       A, X
+   \   00009B 6C00                  OR        A, #0x0
+   \   00009D 08                    XCH       A, X
+   \   00009E BF2801                MOVW      0x128, AX
+     71          	SO0 &= ~0x0004U;	/* CSI10 SO initial level */
+   \   0000A1 AF2801                MOVW      AX, 0x128
+   \   0000A4 5CFF                  AND       A, #0xFF
+   \   0000A6 08                    XCH       A, X
+   \   0000A7 5CFB                  AND       A, #0xFB
+   \   0000A9 08                    XCH       A, X
+   \   0000AA BF2801                MOVW      0x128, AX
+     72          	SOE0 |= 0x0004U;	/* enable CSI10 output */
+   \   0000AD 362A01                MOVW      HL, #0x12A
+   \   0000B0 71A2                  SET1      [HL].2
+     73          	SS0 |= 0x0004U;	/* enable */
+   \   0000B2 362201                MOVW      HL, #0x122
+   \   0000B5 71A2                  SET1      [HL].2
+     74                  
+     75          }
+   \   0000B7 C4                    POP       DE
+   \   0000B8 D7                    RET       
+   \   0000B9                       REQUIRE ?CLRL78_V1_0_L00
+   \   0000B9                       REQUIRE _A_PER0
+   \   0000B9                       REQUIRE _A_SPS0
+   \   0000B9                       REQUIRE _A_P13
+   \   0000B9                       REQUIRE _A_ST0
+   \   0000B9                       REQUIRE _A_MK1
+   \   0000B9                       REQUIRE _A_IF1
+   \   0000B9                       REQUIRE _A_PR11
+   \   0000B9                       REQUIRE _A_PR01
+   \   0000B9                       REQUIRE _A_SIR02
+   \   0000B9                       REQUIRE SMR02
+   \   0000B9                       REQUIRE SCR02
+   \   0000B9                       REQUIRE _A_SDR02
+   \   0000B9                       REQUIRE SO0
+   \   0000B9                       REQUIRE _A_SOE0
+   \   0000B9                       REQUIRE _A_PMC0
+   \   0000B9                       REQUIRE _A_PM0
+   \   0000B9                       REQUIRE _A_P0
+   \   0000B9                       REQUIRE _A_SS0
+     76                  
+     77           //**********************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     78          uint8_t spi10_SendReceiveData(unsigned char *txbuf, unsigned short txnum, unsigned char *rxbuf)  
+   \                     spi10_SendReceiveData:
+     79          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+   \   000000 16                    MOVW      HL, AX
+   \   000001 13                    MOVW      AX, BC
+     80             unsigned char status = 0;
+   \   000002 F3                    CLRB      B
+     81             
+     82             G_SPI_SendingData = 1;
+   \   000003 E5....                ONEB      N:G_SPI_SendingData
+     83             G_SPI_ReceivingData = 1;
+   \   000006 E5....                ONEB      N:G_SPI_ReceivingData
+     84             
+     85             if (txnum < 1U)
+   \   000009 440000                CMPW      AX, #0x0
+   \   00000C DF04                  BNZ       ??spi10_SendEndCallback_2
+     86          	{
+     87          		status = 0x85U;
+   \   00000E 5385                  MOV       B, #0x85
+   \   000010 EF25                  BR        S:??spi10_SendEndCallback_3
+     88          	}
+     89          	else
+     90          	{
+     91          		gCsi10TxCnt = txnum;	/* send data count */
+   \                     ??spi10_SendEndCallback_2:
+   \   000012 BF....                MOVW      N:gCsi10TxCnt, AX
+     92          		gpCsi10TxAddress = txbuf;	/* send buffer pointer */
+   \   000015 17                    MOVW      AX, HL
+   \   000016 BF....                MOVW      N:gpCsi10TxAddress, AX
+   \   000019 17                    MOVW      AX, HL
+     93          		gpCsi10RxAddress = rxbuf;	/* receive buffer pointer */
+   \   00001A 15                    MOVW      AX, DE
+   \   00001B BF....                MOVW      N:gpCsi10RxAddress, AX
+   \   00001E 15                    MOVW      AX, DE
+     94          		CSIMK10 = 1U;	/* disable INTCSI10 interrupt */
+   \   00001F 710AE6                SET1      0xFFFE6.0
+     95          		SIO10 = *gpCsi10TxAddress;	/* started by writing data to SDR[7:0] */
+   \   000022 FB....                MOVW      HL, N:gpCsi10TxAddress
+   \   000025 8B                    MOV       A, [HL]
+   \   000026 9E44                  MOV       0xFFF44, A
+     96          		gpCsi10TxAddress++;
+   \   000028 FB....                MOVW      HL, N:gpCsi10TxAddress
+   \   00002B A7                    INCW      HL
+   \   00002C 17                    MOVW      AX, HL
+   \   00002D BF....                MOVW      N:gpCsi10TxAddress, AX
+   \   000030 16                    MOVW      HL, AX
+     97          		gCsi10TxCnt--;
+   \   000031 B2....                DECW      N:gCsi10TxCnt
+     98          		CSIMK10 = 0U;	/* enable INTCSI10 interrupt */
+   \   000034 710BE6                CLR1      0xFFFE6.0
+     99          	}
+    100          
+    101          	return (status);
+   \                     ??spi10_SendEndCallback_3:
+   \   000037 63                    MOV       A, B
+   \   000038 D7                    RET       
+   \   000039                       REQUIRE ?CLRL78_V1_0_L00
+   \   000039                       REQUIRE _A_MK1
+   \   000039                       REQUIRE _A_SDR02
+    102            
+    103          
+    104          }  
+    105          //****************************************************************************
+    106          
+    107          #pragma vector = INTCSI10_vect
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    108          __interrupt void INTCSI10(void)
+   \                     INTCSI10:
+    109          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C1                    PUSH      AX
+   \   000001 C7                    PUSH      HL
+   \   000002 AEFC                  MOVW      AX, 0xFFFFC
+   \   000004 C1                    PUSH      AX
+   \   000005                       ; Auto size: 0
+    110            
+    111             unsigned char err_type;
+    112          
+    113             err_type = (unsigned char)(SSR02 & 0x0001U);
+   \   000005 AF0401                MOVW      AX, 0x104
+   \   000008 60                    MOV       A, X
+   \   000009 5C01                  AND       A, #0x1
+    114             SIR02 = (unsigned short)err_type;
+   \   00000B 76                    MOV       L, A
+   \   00000C 5700                  MOV       H, #0x0
+   \   00000E 37                    XCHW      AX, HL
+   \   00000F BF0C01                MOVW      0x10C, AX
+   \   000012 17                    MOVW      AX, HL
+    115             if (err_type == 1U)
+   \   000013 4C01                  CMP       A, #0x1
+   \   000015 DF05                  BNZ       ??spi10_SendEndCallback_4
+    116             {
+    117                spi10_ErrorCallback(err_type);   // overrun error occurs 
+   \   000017 FD....                CALL      spi10_ErrorCallback
+   \   00001A EF3B                  BR        S:??spi10_SendEndCallback_5
+    118             }
+    119             else 
+    120             {
+    121                if (gCsi10TxCnt > 0U)
+   \                     ??spi10_SendEndCallback_4:
+   \   00001C F6                    CLRW      AX
+   \   00001D 42....                CMPW      AX, N:gCsi10TxCnt
+   \   000020 DD23                  BZ        ??spi10_SendEndCallback_6
+    122                {
+    123                   *gpCsi10RxAddress = SIO10;
+   \   000022 8E44                  MOV       A, 0xFFF44
+   \   000024 FB....                MOVW      HL, N:gpCsi10RxAddress
+   \   000027 9B                    MOV       [HL], A
+    124                   gpCsi10RxAddress++;
+   \   000028 FB....                MOVW      HL, N:gpCsi10RxAddress
+   \   00002B A7                    INCW      HL
+   \   00002C 17                    MOVW      AX, HL
+   \   00002D BF....                MOVW      N:gpCsi10RxAddress, AX
+   \   000030 17                    MOVW      AX, HL
+    125                   SIO10 = *gpCsi10TxAddress;
+   \   000031 FB....                MOVW      HL, N:gpCsi10TxAddress
+   \   000034 8B                    MOV       A, [HL]
+   \   000035 9E44                  MOV       0xFFF44, A
+    126                   gpCsi10TxAddress++;
+   \   000037 FB....                MOVW      HL, N:gpCsi10TxAddress
+   \   00003A A7                    INCW      HL
+   \   00003B 17                    MOVW      AX, HL
+   \   00003C BF....                MOVW      N:gpCsi10TxAddress, AX
+   \   00003F 16                    MOVW      HL, AX
+    127                   gCsi10TxCnt--;      
+   \   000040 B2....                DECW      N:gCsi10TxCnt
+   \   000043 EF12                  BR        S:??spi10_SendEndCallback_5
+    128                }
+    129                else 
+    130                {
+    131                   if (gCsi10TxCnt == 0U)
+   \                     ??spi10_SendEndCallback_6:
+   \   000045 F6                    CLRW      AX
+   \   000046 42....                CMPW      AX, N:gCsi10TxCnt
+   \   000049 DF06                  BNZ       ??spi10_SendEndCallback_7
+    132                   {
+    133                      *gpCsi10RxAddress = SIO10;
+   \   00004B 8E44                  MOV       A, 0xFFF44
+   \   00004D FB....                MOVW      HL, N:gpCsi10RxAddress
+   \   000050 9B                    MOV       [HL], A
+    134                   }
+    135                   spi10_SendEndCallback();   //complete send 
+   \                     ??spi10_SendEndCallback_7:
+   \   000051 FD....                CALL      spi10_SendEndCallback
+    136                   spi10_ReceiveEndCallback();   // complete receive 
+   \   000054 FD....                CALL      spi10_ReceiveEndCallback
+    137                }
+    138             }
+    139            
+    140          }
+   \                     ??spi10_SendEndCallback_5:
+   \   000057 C0                    POP       AX
+   \   000058 BEFC                  MOVW      0xFFFFC, AX
+   \   00005A C6                    POP       HL
+   \   00005B C0                    POP       AX
+   \   00005C 61FC                  RETI      
+   \   00005E                       REQUIRE ?CLRL78_V1_0_L00
+   \   00005E                       REQUIRE _A_SSR02
+   \   00005E                       REQUIRE _A_SIR02
+   \   00005E                       REQUIRE _A_SDR02
+    141          
+    142          
+    143          //***************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    144          void spi10_ReceiveEndCallback(void)
+   \                     spi10_ReceiveEndCallback:
+    145          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    146             /* Start user code. Do not edit comment generated here */
+    147                  G_SPI_ReceivingData = 0;
+   \   000000 F5....                CLRB      N:G_SPI_ReceivingData
+    148             /* End user code. Do not edit comment generated here */
+    149          }
+   \   000003 D7                    RET       
+   \   000004                       REQUIRE ?CLRL78_V1_0_L00
+    150          //*************************************************************************
+    151          
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    152          void spi10_ErrorCallback(unsigned char err_type)
+   \                     spi10_ErrorCallback:
+    153          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    154             /* Start user code. Do not edit comment generated here */
+    155             /* End user code. Do not edit comment generated here */
+    156          }
+   \   000000 D7                    RET       
+   \   000001                       REQUIRE ?CLRL78_V1_0_L00
+    157          //*************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    158          void spi10_SendEndCallback(void)
+   \                     spi10_SendEndCallback:
+    159          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    160             /* Start user code. Do not edit comment generated here */
+    161                  G_SPI_SendingData = 0;
+   \   000000 F5....                CLRB      N:G_SPI_SendingData
+    162             /* End user code. Do not edit comment generated here */
+    163          }
+   \   000003 D7                    RET       
+   \   000004                       REQUIRE ?CLRL78_V1_0_L00
+
+   \                                 In  segment INTVEC, offset 0x24, root
+   \                     `??INTCSI10??INTVEC 36`:
+   \   000024 ....                  DW INTCSI10
+
+   Segment part sizes:
+
+     Function/Label           Bytes
+     --------------           -----
+     _A_P0                       1
+     _A_P13                      1
+     _A_PM0                      1
+     _A_SDR02                    2
+     _A_IF1                      2
+     _A_MK1                      2
+     _A_PR01                     2
+     _A_PR11                     2
+     _A_PMC0                     1
+     _A_PER0                     1
+     _A_SSR02                    2
+     _A_SIR02                    2
+     SMR02                       2
+     SCR02                       2
+     _A_SS0                      2
+     _A_ST0                      2
+     _A_SPS0                     2
+     SO0                         2
+     _A_SOE0                     2
+     gpCsi10RxAddress            2
+     gCsi10RxLen                 2
+     gCsi10RxCnt                 2
+     gpCsi10TxAddress            2
+     gCsi10TxLen                 2
+     gCsi10TxCnt                 2
+     G_SPI_SendingData           1
+     G_SPI_ReceivingData         1
+     spi10_Init                185
+     spi10_SendReceiveData      57
+     INTCSI10                   94
+     spi10_ReceiveEndCallback    4
+     spi10_ErrorCallback         1
+     spi10_SendEndCallback       4
+     ??INTCSI10??INTVEC 36       2
+
+ 
+ 345 bytes in segment CODE
+   2 bytes in segment INTVEC
+  31 bytes in segment NEAR_A
+  14 bytes in segment NEAR_Z
+   2 bytes in segment SADDR_A
+ 
+ 345 bytes of CODE memory (+  2 bytes shared)
+  14 bytes of DATA memory (+ 33 bytes shared)
+
+Errors: none
+Warnings: none

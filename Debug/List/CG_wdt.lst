@@ -1,0 +1,184 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 31/May/2012  18:44:41 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_wdt.c            #
+#    Command line =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_wdt.c --core     #
+#                    rl78_1 --code_model near --data_model near               #
+#                    --near_const_location rom0 -o                            #
+#                    C:\DESARROLLOS\PrbRL78\Debug\Obj\ --dlib_config          #
+#                    "C:\Program Files\IAR Systems\Embedded Workbench 6.0     #
+#                    Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse         #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN C:\DESARROLLOS\PrbRL78\Debug\List\ -I       #
+#                    C:\DESARROLLOS\PrbRL78\user_include\                     #
+#    List file    =  C:\DESARROLLOS\PrbRL78\Debug\List\CG_wdt.lst             #
+#    Object file  =  C:\DESARROLLOS\PrbRL78\Debug\Obj\CG_wdt.r87              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\DESARROLLOS\PrbRL78\applilet3_src\CG_wdt.c
+      1          /*
+      2          *******************************************************************************
+      3          * Copyright(C) 2011 Renesas Electronics Corporation
+      4          * RENESAS ELECTRONICS CONFIDENTIAL AND PROPRIETARY
+      5          * This program must be used solely for the purpose for which
+      6          * it was furnished by Renesas Electronics Corporation. No part of this
+      7          * program may be reproduced or disclosed to others, in any
+      8          * form, without the prior written permission of Renesas Electronics
+      9          * Corporation. 
+     10          *
+     11          * This device driver was created by Applilet3 for RL78/G13
+     12          * 16-Bit Single-Chip Microcontrollers
+     13          * Filename:	CG_wdt.c
+     14          * Abstract:	This file implements device driver for WDT module.
+     15          * APIlib:	Applilet3 for RL78/G13 E1.00b [14 Jan 2011]
+     16          * Device:	R5F100LE
+     17          * Compiler:	IAR Systems iccrl78
+     18          * Creation date:	9/21/2011
+     19          *******************************************************************************
+     20          */
+     21          
+     22          /*
+     23          *******************************************************************************
+     24          ** Include files
+     25          *******************************************************************************
+     26          */
+     27          #include "CG_macrodriver.h"
+
+   \                                 In  segment NEAR_A, at 0xfffab
+   \   unsigned char volatile __sfr __no_bit_access WDTE
+   \                     WDTE:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfffe0
+   \   union <unnamed> volatile __sfr _A_IF0
+   \                     _A_IF0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe4
+   \   union <unnamed> volatile __sfr _A_MK0
+   \                     _A_MK0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe8
+   \   union <unnamed> volatile __sfr _A_PR00
+   \                     _A_PR00:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffec
+   \   union <unnamed> volatile __sfr _A_PR10
+   \                     _A_PR10:
+   \   000000                       DS 2
+     28          #include "CG_wdt.h"
+     29          /* Start user code for include. Do not edit comment generated here */
+     30          /* End user code. Do not edit comment generated here */
+     31          #include "CG_userdefine.h"
+     32          
+     33          /*
+     34          *******************************************************************************
+     35          **  Global define
+     36          *******************************************************************************
+     37          */
+     38          /* Start user code for global. Do not edit comment generated here */
+     39          /* End user code. Do not edit comment generated here */
+     40          
+     41          /*
+     42          **-----------------------------------------------------------------------------
+     43          **
+     44          **  Abstract:
+     45          **	This function initializes the watchdogtimer.
+     46          **
+     47          **  Parameters:
+     48          **	None
+     49          **
+     50          **  Returns:
+     51          **	None
+     52          **
+     53          **-----------------------------------------------------------------------------
+     54          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     55          void WDT_Init(void)
+   \                     WDT_Init:
+     56          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     57          	WDTIMK = 1U;	/* disable INTWDTI interrupt */
+   \   000000 710AE4                SET1      0xFFFE4.0
+     58          	WDTIIF = 0U;	/* clear INTWDTI interrupt flag */
+   \   000003 710BE0                CLR1      0xFFFE0.0
+     59          	/* Set INTWDTI high priority */
+     60          	WDTIPR1 = 0U;
+   \   000006 710BEC                CLR1      0xFFFEC.0
+     61          	WDTIPR0 = 0U;
+   \   000009 710BE8                CLR1      0xFFFE8.0
+     62          	WDTIMK = 0U;	/* enable INTWDTI interrupt */
+   \   00000C 710BE4                CLR1      0xFFFE4.0
+     63          }
+   \   00000F D7                    RET       
+   \   000010                       REQUIRE ?CLRL78_V1_0_L00
+   \   000010                       REQUIRE _A_MK0
+   \   000010                       REQUIRE _A_IF0
+   \   000010                       REQUIRE _A_PR10
+   \   000010                       REQUIRE _A_PR00
+     64          /*
+     65          **-----------------------------------------------------------------------------
+     66          **
+     67          **  Abstract:
+     68          **	This function restarts the watchdog timer.
+     69          **
+     70          **  Parameters:
+     71          **	None
+     72          **
+     73          **  Returns:
+     74          **	None
+     75          **
+     76          **-----------------------------------------------------------------------------
+     77          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     78          void WDT_Restart(void)
+   \                     WDT_Restart:
+     79          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     80          	WDTE = 0xACU; 	/* restart watchdog timer */
+   \   000000 CEABAC                MOV       0xFFFAB, #0xAC
+     81          }
+   \   000003 D7                    RET       
+   \   000004                       REQUIRE ?CLRL78_V1_0_L00
+   \   000004                       REQUIRE WDTE
+     82          
+     83          /* Start user code for adding. Do not edit comment generated here */
+     84          /* End user code. Do not edit comment generated here */
+
+   Segment part sizes:
+
+     Function/Label Bytes
+     -------------- -----
+     WDTE              1
+     _A_IF0            2
+     _A_MK0            2
+     _A_PR00           2
+     _A_PR10           2
+     WDT_Init         16
+     WDT_Restart       4
+
+ 
+ 20 bytes in segment CODE
+  9 bytes in segment NEAR_A
+ 
+ 20 bytes of CODE memory
+  0 bytes of DATA memory (+ 9 bytes shared)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,386 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 31/May/2012  18:44:39 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_port.c           #
+#    Command line =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_port.c --core    #
+#                    rl78_1 --code_model near --data_model near               #
+#                    --near_const_location rom0 -o                            #
+#                    C:\DESARROLLOS\PrbRL78\Debug\Obj\ --dlib_config          #
+#                    "C:\Program Files\IAR Systems\Embedded Workbench 6.0     #
+#                    Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse         #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN C:\DESARROLLOS\PrbRL78\Debug\List\ -I       #
+#                    C:\DESARROLLOS\PrbRL78\user_include\                     #
+#    List file    =  C:\DESARROLLOS\PrbRL78\Debug\List\CG_port.lst            #
+#    Object file  =  C:\DESARROLLOS\PrbRL78\Debug\Obj\CG_port.r87             #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\DESARROLLOS\PrbRL78\applilet3_src\CG_port.c
+      1          /*
+      2          *******************************************************************************
+      3          * Copyright(C) 2011 Renesas Electronics Corporation
+      4          * RENESAS ELECTRONICS CONFIDENTIAL AND PROPRIETARY
+      5          * This program must be used solely for the purpose for which
+      6          * it was furnished by Renesas Electronics Corporation. No part of this
+      7          * program may be reproduced or disclosed to others, in any
+      8          * form, without the prior written permission of Renesas Electronics
+      9          * Corporation. 
+     10          *
+     11          * This device driver was created by Applilet3 for RL78/G13
+     12          * 16-Bit Single-Chip Microcontrollers
+     13          * Filename:	CG_port.c
+     14          * Abstract:	This file implements device driver for PORT module.
+     15          * APIlib:	Applilet3 for RL78/G13 E1.00b [14 Jan 2011]
+     16          * Device:	R5F100LE
+     17          * Compiler:	IAR Systems iccrl78
+     18          * Creation date:	9/21/2011
+     19          *******************************************************************************
+     20          */
+     21          
+     22          /*
+     23          *******************************************************************************
+     24          ** Include files
+     25          *******************************************************************************
+     26          */
+     27          #include "CG_macrodriver.h"
+
+   \                                 In  segment SADDR_A, at 0xfff01
+   \   union <unnamed> volatile __saddr _A_P1
+   \                     _A_P1:
+   \   000000                       DS 1
+
+   \                                 In  segment SADDR_A, at 0xfff04
+   \   union <unnamed> volatile __saddr _A_P4
+   \                     _A_P4:
+   \   000000                       DS 1
+
+   \                                 In  segment SADDR_A, at 0xfff05
+   \   union <unnamed> volatile __saddr _A_P5
+   \                     _A_P5:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff21
+   \   union <unnamed> volatile __sfr _A_PM1
+   \                     _A_PM1:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff24
+   \   union <unnamed> volatile __sfr _A_PM4
+   \                     _A_PM4:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff25
+   \   union <unnamed> volatile __sfr _A_PM5
+   \                     _A_PM5:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0031
+   \   union <unnamed> volatile _A_PU1
+   \                     _A_PU1:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0035
+   \   union <unnamed> volatile _A_PU5
+   \                     _A_PU5:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0041
+   \   union <unnamed> volatile _A_PIM1
+   \                     _A_PIM1:
+   \   000000                       DS 1
+     28          #include "CG_port.h"
+     29          /* Start user code for include. Do not edit comment generated here */
+     30          /* End user code. Do not edit comment generated here */
+     31          #include "CG_userdefine.h"
+     32          
+     33          /*
+     34          *******************************************************************************
+     35          **  Global define
+     36          *******************************************************************************
+     37          */
+     38          /* Start user code for global. Do not edit comment generated here */
+     39          /* End user code. Do not edit comment generated here */
+     40          
+     41          /*
+     42          **-----------------------------------------------------------------------------
+     43          **
+     44          **  Abstract:
+     45          **	This function initializes the Port I/O.
+     46          **
+     47          **  Parameters:
+     48          **	None
+     49          **
+     50          **  Returns:
+     51          **	None
+     52          **
+     53          **-----------------------------------------------------------------------------
+     54          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     55          void PORT_Init(void)
+   \                     PORT_Init:
+     56          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     57          	P1 = _01_Pn0_OUTPUT_1 | _20_Pn5_OUTPUT_1;
+   \   000000 CD0121                MOV       S:0xFFF01, #0x21
+     58          	P4 = _04_Pn2_OUTPUT_1;
+   \   000003 CD0404                MOV       S:0xFFF04, #0x4
+     59          	P5 = _00_Pn5_OUTPUT_0;
+   \   000006 F405                  CLRB      S:0xFFF05
+     60          	PM1 = _00_PMn0_MODE_OUTPUT | _02_PMn1_NOT_USE | _04_PMn2_NOT_USE | _08_PMn3_NOT_USE | _10_PMn4_NOT_USE | _00_PMn5_MODE_OUTPUT | _40_PMn6_NOT_USE | _80_PMn7_NOT_USE;
+   \   000008 CE21DE                MOV       0xFFF21, #0xDE
+     61          	PM4 = _01_PMn0_NOT_USE | _02_PMn1_NOT_USE | _00_PMn2_MODE_OUTPUT | _08_PMn3_NOT_USE | _F0_PM4_DEFAULT;
+   \   00000B CE24FB                MOV       0xFFF24, #0xFB
+     62          	PM5 = _01_PMn0_NOT_USE | _02_PMn1_NOT_USE | _04_PMn2_NOT_USE | _08_PMn3_NOT_USE | _10_PMn4_NOT_USE | _00_PMn5_MODE_OUTPUT | _C0_PM5_DEFAULT;
+   \   00000E CE25DF                MOV       0xFFF25, #0xDF
+     63          }
+   \   000011 D7                    RET       
+   \   000012                       REQUIRE ?CLRL78_V1_0_L00
+   \   000012                       REQUIRE _A_P1
+   \   000012                       REQUIRE _A_P4
+   \   000012                       REQUIRE _A_P5
+   \   000012                       REQUIRE _A_PM1
+   \   000012                       REQUIRE _A_PM4
+   \   000012                       REQUIRE _A_PM5
+     64          /*
+     65          **-----------------------------------------------------------------------------
+     66          **
+     67          **  Abstract:
+     68          **	This function changes P16 to input mode by software.
+     69          **
+     70          **  Parameters:
+     71          **	enablepu: Pull-up enable or not
+     72          **	enablettl: TTL enable or not
+     73          **
+     74          **  Returns:
+     75          **	None
+     76          **
+     77          **-----------------------------------------------------------------------------
+     78          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     79          void PORT_ChangeP16Input(BOOL enablepu, BOOL enablettl)
+   \                     PORT_ChangeP16Input:
+     80          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     81          	if (enablepu)
+   \   000000 D1                    CMP0      A
+   \   000001 DD07                  BZ        ??PORT_ChangeP55Output_0
+     82          	{
+     83          		PU1 |= _40_PUn6_PULLUP_ON;
+   \   000003 363100                MOVW      HL, #0x31
+   \   000006 71E2                  SET1      [HL].6
+   \   000008 EF05                  BR        S:??PORT_ChangeP55Output_1
+     84          	}
+     85          	else
+     86          	{
+     87          		PU1 &= (UCHAR)~_40_PUn6_PULLUP_ON;
+   \                     ??PORT_ChangeP55Output_0:
+   \   00000A 363100                MOVW      HL, #0x31
+   \   00000D 71E3                  CLR1      [HL].6
+     88          	}
+     89          	if (enablettl)
+   \                     ??PORT_ChangeP55Output_1:
+   \   00000F D3                    CMP0      B
+   \   000010 DD07                  BZ        ??PORT_ChangeP55Output_2
+     90          	{
+     91          		PIM1 |= _40_PIMn6_TTL_ON;
+   \   000012 364100                MOVW      HL, #0x41
+   \   000015 71E2                  SET1      [HL].6
+   \   000017 EF05                  BR        S:??PORT_ChangeP55Output_3
+     92          	}
+     93          	else
+     94          	{
+     95          		PIM1 &= (UCHAR)~_40_PIMn6_TTL_ON;
+   \                     ??PORT_ChangeP55Output_2:
+   \   000019 364100                MOVW      HL, #0x41
+   \   00001C 71E3                  CLR1      [HL].6
+     96          	}
+     97          	PM1 |= _40_PMn6_MODE_INPUT;
+   \                     ??PORT_ChangeP55Output_3:
+   \   00001E 716A21                SET1      0xFFF21.6
+     98          }
+   \   000021 D7                    RET       
+   \   000022                       REQUIRE ?CLRL78_V1_0_L00
+   \   000022                       REQUIRE _A_PU1
+   \   000022                       REQUIRE _A_PIM1
+   \   000022                       REQUIRE _A_PM1
+     99          /*
+    100          **-----------------------------------------------------------------------------
+    101          **
+    102          **  Abstract:
+    103          **	This function changes P16 to output mode by software.
+    104          **
+    105          **  Parameters:
+    106          **	initialvalue: initial output 1 or 0
+    107          **
+    108          **  Returns:
+    109          **	None
+    110          **
+    111          **-----------------------------------------------------------------------------
+    112          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    113          void PORT_ChangeP16Output(BOOL initialvalue)
+   \                     PORT_ChangeP16Output:
+    114          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    115          	if (initialvalue)
+   \   000000 D1                    CMP0      A
+   \   000001 DD05                  BZ        ??PORT_ChangeP55Output_4
+    116          	{
+    117          		P1 |= _40_Pn6_OUTPUT_1;
+   \   000003 716201                SET1      S:0xFFF01.6
+   \   000006 EF03                  BR        S:??PORT_ChangeP55Output_5
+    118          	}
+    119          	else
+    120          	{
+    121          		P1 &= (UCHAR)~_40_Pn6_OUTPUT_1;
+   \                     ??PORT_ChangeP55Output_4:
+   \   000008 716301                CLR1      S:0xFFF01.6
+    122          	}
+    123          	PM1 &= (UCHAR)~_40_PMn6_MODE_INPUT;
+   \                     ??PORT_ChangeP55Output_5:
+   \   00000B 716B21                CLR1      0xFFF21.6
+    124          }
+   \   00000E D7                    RET       
+   \   00000F                       REQUIRE ?CLRL78_V1_0_L00
+   \   00000F                       REQUIRE _A_P1
+   \   00000F                       REQUIRE _A_PM1
+    125          /*
+    126          **-----------------------------------------------------------------------------
+    127          **
+    128          **  Abstract:
+    129          **	This function changes P55 to input mode by software.
+    130          **
+    131          **  Parameters:
+    132          **	enablepu: Pull-up enable or not
+    133          **
+    134          **  Returns:
+    135          **	None
+    136          **
+    137          **-----------------------------------------------------------------------------
+    138          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    139          void PORT_ChangeP55Input(BOOL enablepu)
+   \                     PORT_ChangeP55Input:
+    140          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    141          	if (enablepu)
+   \   000000 D1                    CMP0      A
+   \   000001 DD07                  BZ        ??PORT_ChangeP55Output_6
+    142          	{
+    143          		PU5 |= _20_PUn5_PULLUP_ON;
+   \   000003 363500                MOVW      HL, #0x35
+   \   000006 71D2                  SET1      [HL].5
+   \   000008 EF05                  BR        S:??PORT_ChangeP55Output_7
+    144          	}
+    145          	else
+    146          	{
+    147          		PU5 &= (UCHAR)~_20_PUn5_PULLUP_ON;
+   \                     ??PORT_ChangeP55Output_6:
+   \   00000A 363500                MOVW      HL, #0x35
+   \   00000D 71D3                  CLR1      [HL].5
+    148          	}
+    149          	PM5 |= _20_PMn5_MODE_INPUT;
+   \                     ??PORT_ChangeP55Output_7:
+   \   00000F 715A25                SET1      0xFFF25.5
+    150          }
+   \   000012 D7                    RET       
+   \   000013                       REQUIRE ?CLRL78_V1_0_L00
+   \   000013                       REQUIRE _A_PU5
+   \   000013                       REQUIRE _A_PM5
+    151          /*
+    152          **-----------------------------------------------------------------------------
+    153          **
+    154          **  Abstract:
+    155          **	This function changes P55 to output mode by software.
+    156          **
+    157          **  Parameters:
+    158          **	initialvalue: initial output 1 or 0
+    159          **
+    160          **  Returns:
+    161          **	None
+    162          **
+    163          **-----------------------------------------------------------------------------
+    164          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    165          void PORT_ChangeP55Output(BOOL initialvalue)
+   \                     PORT_ChangeP55Output:
+    166          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    167          	if (initialvalue)
+   \   000000 D1                    CMP0      A
+   \   000001 DD05                  BZ        ??PORT_ChangeP55Output_8
+    168          	{
+    169          		P5 |= _20_Pn5_OUTPUT_1;
+   \   000003 715205                SET1      S:0xFFF05.5
+   \   000006 EF03                  BR        S:??PORT_ChangeP55Output_9
+    170          	}
+    171          	else
+    172          	{
+    173          		P5 &= (UCHAR)~_20_Pn5_OUTPUT_1;
+   \                     ??PORT_ChangeP55Output_8:
+   \   000008 715305                CLR1      S:0xFFF05.5
+    174          	}
+    175          	PM5 &= (UCHAR)~_20_PMn5_MODE_INPUT;
+   \                     ??PORT_ChangeP55Output_9:
+   \   00000B 715B25                CLR1      0xFFF25.5
+    176          }
+   \   00000E D7                    RET       
+   \   00000F                       REQUIRE ?CLRL78_V1_0_L00
+   \   00000F                       REQUIRE _A_P5
+   \   00000F                       REQUIRE _A_PM5
+    177          
+    178          /* Start user code for adding. Do not edit comment generated here */
+    179          /* End user code. Do not edit comment generated here */
+
+   Segment part sizes:
+
+     Function/Label       Bytes
+     --------------       -----
+     _A_P1                   1
+     _A_P4                   1
+     _A_P5                   1
+     _A_PM1                  1
+     _A_PM4                  1
+     _A_PM5                  1
+     _A_PU1                  1
+     _A_PU5                  1
+     _A_PIM1                 1
+     PORT_Init              18
+     PORT_ChangeP16Input    34
+     PORT_ChangeP16Output   15
+     PORT_ChangeP55Input    19
+     PORT_ChangeP55Output   15
+
+ 
+ 101 bytes in segment CODE
+   6 bytes in segment NEAR_A
+   3 bytes in segment SADDR_A
+ 
+ 101 bytes of CODE memory
+   0 bytes of DATA memory (+ 9 bytes shared)
+
+Errors: none
+Warnings: none

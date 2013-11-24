@@ -1,0 +1,297 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 31/May/2012  18:44:39 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_it.c             #
+#    Command line =  C:\DESARROLLOS\PrbRL78\applilet3_src\CG_it.c --core      #
+#                    rl78_1 --code_model near --data_model near               #
+#                    --near_const_location rom0 -o                            #
+#                    C:\DESARROLLOS\PrbRL78\Debug\Obj\ --dlib_config          #
+#                    "C:\Program Files\IAR Systems\Embedded Workbench 6.0     #
+#                    Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse         #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN C:\DESARROLLOS\PrbRL78\Debug\List\ -I       #
+#                    C:\DESARROLLOS\PrbRL78\user_include\                     #
+#    List file    =  C:\DESARROLLOS\PrbRL78\Debug\List\CG_it.lst              #
+#    Object file  =  C:\DESARROLLOS\PrbRL78\Debug\Obj\CG_it.r87               #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\DESARROLLOS\PrbRL78\applilet3_src\CG_it.c
+      1          /*
+      2          *******************************************************************************
+      3          * Copyright(C) 2011 Renesas Electronics Corporation
+      4          * RENESAS ELECTRONICS CONFIDENTIAL AND PROPRIETARY
+      5          * This program must be used solely for the purpose for which
+      6          * it was furnished by Renesas Electronics Corporation. No part of this
+      7          * program may be reproduced or disclosed to others, in any
+      8          * form, without the prior written permission of Renesas Electronics
+      9          * Corporation. 
+     10          *
+     11          * This device driver was created by Applilet3 for RL78/G13
+     12          * 16-Bit Single-Chip Microcontrollers
+     13          * Filename:	CG_it.c
+     14          * Abstract:	This file implements device driver for IT module.
+     15          * APIlib:	Applilet3 for RL78/G13 E1.00b [14 Jan 2011]
+     16          * Device:	R5F100LE
+     17          * Compiler:	IAR Systems iccrl78
+     18          * Creation date:	9/21/2011
+     19          *******************************************************************************
+     20          */
+     21          
+     22          /*
+     23          *******************************************************************************
+     24          ** Include files
+     25          *******************************************************************************
+     26          */
+     27          #include "CG_macrodriver.h"
+
+   \                                 In  segment NEAR_A, at 0xfff90
+   \   unsigned short volatile __sfr __no_bit_access ITMC
+   \                     ITMC:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe2
+   \   union <unnamed> volatile __sfr _A_IF1
+   \                     _A_IF1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe6
+   \   union <unnamed> volatile __sfr _A_MK1
+   \                     _A_MK1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffea
+   \   union <unnamed> volatile __sfr _A_PR01
+   \                     _A_PR01:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffee
+   \   union <unnamed> volatile __sfr _A_PR11
+   \                     _A_PR11:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf00f0
+   \   union <unnamed> volatile _A_PER0
+   \                     _A_PER0:
+   \   000000                       DS 1
+     28          #include "CG_it.h"
+     29          /* Start user code for include. Do not edit comment generated here */
+     30          /* End user code. Do not edit comment generated here */
+     31          #include "CG_userdefine.h"
+     32          
+     33          /*
+     34          *******************************************************************************
+     35          **  Global define
+     36          *******************************************************************************
+     37          */
+     38          /* Start user code for global. Do not edit comment generated here */
+     39          /* End user code. Do not edit comment generated here */
+     40          
+     41          /*
+     42          **-----------------------------------------------------------------------------
+     43          **
+     44          **  Abstract:
+     45          **	This function initializes the IT module.
+     46          **
+     47          **  Parameters:
+     48          **	None
+     49          **
+     50          **  Returns:
+     51          **	None
+     52          **
+     53          **-----------------------------------------------------------------------------
+     54          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     55          void IT_Init(void)
+   \                     IT_Init:
+     56          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     57          	RTCEN = 1U;	/* supply RTC clock */
+   \   000000 36F000                MOVW      HL, #0xF0
+   \   000003 71F2                  SET1      [HL].7
+     58          	ITMC = _0000_IT_OPERATION_DISABLE;	/* disable ITMC operation */
+   \   000005 CB900000              MOVW      0xFFF90, #0x0
+     59          	ITMK = 1U;	/* disable INTIT interrupt */
+   \   000009 712AE7                SET1      0xFFFE7.2
+     60          	ITIF = 0U;	/* clear INTIT interrupt flag */
+   \   00000C 712BE3                CLR1      0xFFFE3.2
+     61          	/* Set INTIT level1 priority */
+     62          	ITPR1 = 0U;
+   \   00000F 712BEF                CLR1      0xFFFEF.2
+     63          	ITPR0 = 1U;
+   \   000012 712AEB                SET1      0xFFFEB.2
+     64          	ITMC = _000E_ITMCMP_VALUE;
+   \   000015 CB900E00              MOVW      0xFFF90, #0xE
+     65          }
+   \   000019 D7                    RET       
+   \   00001A                       REQUIRE ?CLRL78_V1_0_L00
+   \   00001A                       REQUIRE _A_PER0
+   \   00001A                       REQUIRE ITMC
+   \   00001A                       REQUIRE _A_MK1
+   \   00001A                       REQUIRE _A_IF1
+   \   00001A                       REQUIRE _A_PR11
+   \   00001A                       REQUIRE _A_PR01
+     66          /*
+     67          **-----------------------------------------------------------------------------
+     68          **
+     69          **  Abstract:
+     70          **	This function starts IT module operation.
+     71          **
+     72          **  Parameters:
+     73          **	None
+     74          **
+     75          **  Returns:
+     76          **	None
+     77          **
+     78          **-----------------------------------------------------------------------------
+     79          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     80          void IT_Start(void)
+   \                     IT_Start:
+     81          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     82          	ITIF = 0U;	/* clear INTIT interrupt flag */
+   \   000000 712BE3                CLR1      0xFFFE3.2
+     83          	ITMK = 0U;	/* enable INTIT interrupt */
+   \   000003 712BE7                CLR1      0xFFFE7.2
+     84          	ITMC |= _8000_IT_OPERATION_ENABLE;	/* enable IT operation */
+   \   000006 AE90                  MOVW      AX, 0xFFF90
+   \   000008 6C80                  OR        A, #0x80
+   \   00000A 08                    XCH       A, X
+   \   00000B 6C00                  OR        A, #0x0
+   \   00000D 08                    XCH       A, X
+   \   00000E BE90                  MOVW      0xFFF90, AX
+     85          }
+   \   000010 D7                    RET       
+   \   000011                       REQUIRE ?CLRL78_V1_0_L00
+   \   000011                       REQUIRE _A_IF1
+   \   000011                       REQUIRE _A_MK1
+   \   000011                       REQUIRE ITMC
+     86          /*
+     87          **-----------------------------------------------------------------------------
+     88          **
+     89          **  Abstract:
+     90          **	This function stops IT module operation.
+     91          **
+     92          **  Parameters:
+     93          **	None
+     94          **
+     95          **  Returns:
+     96          **	None
+     97          **
+     98          **-----------------------------------------------------------------------------
+     99          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    100          void IT_Stop(void)
+   \                     IT_Stop:
+    101          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+    102          	ITMC &= (UCHAR)~_8000_IT_OPERATION_ENABLE;	/* disable ITMC operation */
+   \   000000 AE90                  MOVW      AX, 0xFFF90
+   \   000002 5C00                  AND       A, #0x0
+   \   000004 08                    XCH       A, X
+   \   000005 5CFF                  AND       A, #0xFF
+   \   000007 08                    XCH       A, X
+   \   000008 BE90                  MOVW      0xFFF90, AX
+    103          	ITMK = 1U;	/* disable INTIT interrupt */
+   \   00000A 712AE7                SET1      0xFFFE7.2
+    104          	ITIF = 0U;	/* clear INTIT interrupt flag */
+   \   00000D 712BE3                CLR1      0xFFFE3.2
+    105          }
+   \   000010 D7                    RET       
+   \   000011                       REQUIRE ?CLRL78_V1_0_L00
+   \   000011                       REQUIRE ITMC
+   \   000011                       REQUIRE _A_MK1
+   \   000011                       REQUIRE _A_IF1
+    106          /*
+    107          **-----------------------------------------------------------------------------
+    108          **
+    109          **  Abstract:
+    110          **	This function changes IT register value.
+    111          **
+    112          **  Parameters:
+    113          **	regvalue: value for data register
+    114          **
+    115          **  Returns:
+    116          **	None
+    117          **
+    118          **-----------------------------------------------------------------------------
+    119          */
+
+   \                                 In  segment CODE, align 1, keep-with-next
+    120          void IT_ChangeTimerCondition(USHORT regvalue)
+   \                     IT_ChangeTimerCondition:
+    121          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+   \   000000 16                    MOVW      HL, AX
+    122          	regvalue &= 0x0FFFU;
+   \   000001 17                    MOVW      AX, HL
+   \   000002 5C0F                  AND       A, #0xF
+   \   000004 08                    XCH       A, X
+   \   000005 5CFF                  AND       A, #0xFF
+   \   000007 08                    XCH       A, X
+   \   000008 16                    MOVW      HL, AX
+    123          	ITMC &= 0x8000U;
+   \   000009 AE90                  MOVW      AX, 0xFFF90
+   \   00000B 5C80                  AND       A, #0x80
+   \   00000D 08                    XCH       A, X
+   \   00000E 5C00                  AND       A, #0x0
+   \   000010 08                    XCH       A, X
+   \   000011 BE90                  MOVW      0xFFF90, AX
+    124          	ITMC |= regvalue;
+   \   000013 AE90                  MOVW      AX, 0xFFF90
+   \   000015 616F                  OR        A, H
+   \   000017 08                    XCH       A, X
+   \   000018 616E                  OR        A, L
+   \   00001A 08                    XCH       A, X
+   \   00001B BE90                  MOVW      0xFFF90, AX
+    125          }
+   \   00001D D7                    RET       
+   \   00001E                       REQUIRE ?CLRL78_V1_0_L00
+   \   00001E                       REQUIRE ITMC
+    126          
+    127          /* Start user code for adding. Do not edit comment generated here */
+    128          /* End user code. Do not edit comment generated here */
+
+   Segment part sizes:
+
+     Function/Label          Bytes
+     --------------          -----
+     ITMC                       2
+     _A_IF1                     2
+     _A_MK1                     2
+     _A_PR01                    2
+     _A_PR11                    2
+     _A_PER0                    1
+     IT_Init                   26
+     IT_Start                  17
+     IT_Stop                   17
+     IT_ChangeTimerCondition   30
+
+ 
+ 90 bytes in segment CODE
+ 11 bytes in segment NEAR_A
+ 
+ 90 bytes of CODE memory
+  0 bytes of DATA memory (+ 11 bytes shared)
+
+Errors: none
+Warnings: none

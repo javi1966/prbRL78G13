@@ -1,0 +1,780 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V1.10.4.30019 [Kickstart] for RL78 27/Jul/2012  19:39:35 #
+# Copyright 2011 IAR Systems AB.                                              #
+#                                                                             #
+#    Core         =  rl78_1                                                   #
+#    Code model   =  Near                                                     #
+#    Data model   =  Near                                                     #
+#                 =                                                           #
+#    Source file  =  D:\DESARROLLOS\prbRL78G13\IR.c                           #
+#    Command line =  D:\DESARROLLOS\prbRL78G13\IR.c --core rl78_1             #
+#                    --code_model near --data_model near                      #
+#                    --near_const_location rom0 -o                            #
+#                    D:\DESARROLLOS\prbRL78G13\Debug\Obj\ --dlib_config       #
+#                    "D:\Archivos de programa\IAR Systems\Embedded Workbench  #
+#                    6.0 Kickstart\rl78\LIB\dlrl78nn1n.h" -e -Ol --no_cse     #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --debug -lCN D:\DESARROLLOS\prbRL78G13\Debug\List\ -I    #
+#                    D:\DESARROLLOS\prbRL78G13\user_include\                  #
+#    List file    =  D:\DESARROLLOS\prbRL78G13\Debug\List\IR.lst              #
+#    Object file  =  D:\DESARROLLOS\prbRL78G13\Debug\Obj\IR.r87               #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\DESARROLLOS\prbRL78G13\IR.c
+      1          #include <string.h>
+      2          #include "ior5f100le.h"
+
+   \                                 In  segment NEAR_A, at 0xfff23
+   \   union <unnamed> volatile __sfr _A_PM3
+   \                     _A_PM3:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xfff66
+   \   union <unnamed> volatile __sfr __no_bit_access _A_TDR03
+   \                     _A_TDR03:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe2
+   \   union <unnamed> volatile __sfr _A_IF1
+   \                     _A_IF1:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xfffe6
+   \   union <unnamed> volatile __sfr _A_MK1
+   \                     _A_MK1:
+   \   000000                       DS 2
+      3          #include "ior5f100le_ext.h"
+
+   \                                 In  segment NEAR_A, at 0xf0071
+   \   union <unnamed> volatile _A_NFEN1
+   \                     _A_NFEN1:
+   \   000000                       DS 1
+
+   \                                 In  segment NEAR_A, at 0xf0196
+   \   unsigned short volatile __no_bit_access TMR03
+   \                     TMR03:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01a6
+   \   union <unnamed> const volatile __no_bit_access _A_TSR03
+   \                     _A_TSR03:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b2
+   \   union <unnamed> volatile _A_TS0
+   \                     _A_TS0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b4
+   \   union <unnamed> volatile _A_TT0
+   \                     _A_TT0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01b8
+   \   union <unnamed> volatile __no_bit_access _A_TO0
+   \                     _A_TO0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01ba
+   \   union <unnamed> volatile _A_TOE0
+   \                     _A_TOE0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01bc
+   \   union <unnamed> volatile __no_bit_access _A_TOL0
+   \                     _A_TOL0:
+   \   000000                       DS 2
+
+   \                                 In  segment NEAR_A, at 0xf01be
+   \   union <unnamed> volatile __no_bit_access _A_TOM0
+   \                     _A_TOM0:
+   \   000000                       DS 2
+      4          #include "intrinsics.h"
+      5          
+      6          
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+      7          volatile unsigned long gTau0Ch3Width;
+   \                     gTau0Ch3Width:
+   \   000000                       DS 4
+   \   000004                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+      8          unsigned char rx_index = 0;         /* Index of bit to receive */
+   \                     rx_index:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_I, align 1, align-sorted
+      9          unsigned char rx_fronthalf = 1;     /* If high, process first 32 cycles. If low, second 32 cycles */
+   \                     rx_fronthalf:
+   \   000000                       DS 1
+   \   000001                       REQUIRE `?<Initializer for rx_fronthalf>`
+   \   000001                       REQUIRE __INIT_NEAR_I
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     10          unsigned char rx_packet[14];
+   \                     rx_packet:
+   \   000000                       DS 14
+   \   00000E                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+     11          extern  unsigned char got_packet = 0;
+   \                     got_packet:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     12          unsigned int pulses_seen = 0;
+   \                     pulses_seen:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+     13          
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     14           unsigned char packet[14];
+   \                     packet:
+   \   000000                       DS 14
+   \   00000E                       REQUIRE __INIT_NEAR_Z
+     15           
+
+   \                                 In  segment NEAR_Z, align 1, align-sorted
+     16           unsigned char it_timeouts;
+   \                     it_timeouts:
+   \   000000                       DS 1
+   \   000001                       REQUIRE __INIT_NEAR_Z
+     17           
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     18          long PulseWidth[70];		/* Store pulse width */
+   \                     PulseWidth:
+   \   000000                       DS 280
+   \   000118                       REQUIRE __INIT_NEAR_Z
+
+   \                                 In  segment NEAR_Z, align 2, align-sorted
+     19          int irPtr=0;	
+   \                     irPtr:
+   \   000000                       DS 2
+   \   000002                       REQUIRE __INIT_NEAR_Z
+     20          
+     21          //******************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     22          void startIR()
+   \                     startIR:
+     23          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001 C5                    PUSH      DE
+   \   000002                       ; Auto size: 0
+     24               memset(PulseWidth,0x00,sizeof(PulseWidth));
+   \   000002 341801                MOVW      DE, #0x118
+   \   000005 F7                    CLRW      BC
+   \   000006 30....                MOVW      AX, #PulseWidth
+   \   000009 FD....                CALL      memset
+     25               irPtr=0;
+   \   00000C F6                    CLRW      AX
+   \   00000D BF....                MOVW      N:irPtr, AX
+     26               got_packet = 0;
+   \   000010 F5....                CLRB      N:got_packet
+     27            
+     28          }
+   \   000013 C4                    POP       DE
+   \   000014 C2                    POP       BC
+   \   000015 D7                    RET       
+   \   000016                       REQUIRE ?CLRL78_V1_0_L00
+     29          //********************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     30          void initIR()
+   \                     initIR:
+     31          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000                       ; Auto size: 0
+     32            
+     33                  TMR03 = 0x0104;  //modo captura,con flanco bajada
+   \   000000 300401                MOVW      AX, #0x104
+   \   000003 BF9601                MOVW      0x196, AX
+     34          	TOM0 &= ~0x0008;  //TI03 input
+   \   000006 AFBE01                MOVW      AX, 0x1BE
+   \   000009 5CFF                  AND       A, #0xFF
+   \   00000B 08                    XCH       A, X
+   \   00000C 5CF7                  AND       A, #0xF7
+   \   00000E 08                    XCH       A, X
+   \   00000F BFBE01                MOVW      0x1BE, AX
+     35          	TOL0 &= ~0x0008;
+   \   000012 AFBC01                MOVW      AX, 0x1BC
+   \   000015 5CFF                  AND       A, #0xFF
+   \   000017 08                    XCH       A, X
+   \   000018 5CF7                  AND       A, #0xF7
+   \   00001A 08                    XCH       A, X
+   \   00001B BFBC01                MOVW      0x1BC, AX
+     36          	TO0 &= ~ 0x0008;
+   \   00001E AFB801                MOVW      AX, 0x1B8
+   \   000021 5CFF                  AND       A, #0xFF
+   \   000023 08                    XCH       A, X
+   \   000024 5CF7                  AND       A, #0xF7
+   \   000026 08                    XCH       A, X
+   \   000027 BFB801                MOVW      0x1B8, AX
+     37          	TOE0 &= ~0x0008;
+   \   00002A 36BA01                MOVW      HL, #0x1BA
+   \   00002D 71B3                  CLR1      [HL].3
+     38          	NFEN1 &= (unsigned char)~0x08;	// previene ruido canal 3
+   \   00002F 367100                MOVW      HL, #0x71
+   \   000032 71B3                  CLR1      [HL].3
+     39                  PM3 |= 0x02U;                   //P31 input
+   \   000034 711A23                SET1      0xFFF23.1
+     40                  TMIF03 = 0U;	                // clear INTTM03 interrupt flag 
+   \   000037 717BE2                CLR1      0xFFFE2.7
+     41          	TMMK03 = 0U;	                // enable INTTM03 interrupt 
+   \   00003A 717BE6                CLR1      0xFFFE6.7
+     42          	TS0 |= 0x0008;                  //TRIGGER ON.
+   \   00003D 36B201                MOVW      HL, #0x1B2
+   \   000040 71B2                  SET1      [HL].3
+     43                  
+     44                  /*
+     45                  //inicia Ttimer interval para Timeout
+     46                  ITMC = 0x0000;	// disable ITMC operation 
+     47          	ITMK = 1U;	// disable INTIT interrupt 
+     48          	ITIF = 0U;	// clear INTIT interrupt flag 
+     49          	// Set INTIT low priority 
+     50          	ITPR1 = 1U;
+     51          	ITPR0 = 1U;
+     52          	ITMC = 0x007;  //valor de IT  7 * 1/32768 Khz
+     53                  //Start
+     54                  ITIF = 0U;	// clear INTIT interrupt flag 
+     55          	ITMK = 1U;	// enable INTIT interrupt 
+     56          	ITMC |= 0x8000;	// enable IT operation 
+     57                  */
+     58                  startIR();
+   \   000042 ED....                BR        N:startIR
+   \   000045                       REQUIRE ?CLRL78_V1_0_L00
+   \   000045                       REQUIRE TMR03
+   \   000045                       REQUIRE _A_TOM0
+   \   000045                       REQUIRE _A_TOL0
+   \   000045                       REQUIRE _A_TO0
+   \   000045                       REQUIRE _A_TOE0
+   \   000045                       REQUIRE _A_NFEN1
+   \   000045                       REQUIRE _A_PM3
+   \   000045                       REQUIRE _A_IF1
+   \   000045                       REQUIRE _A_MK1
+   \   000045                       REQUIRE _A_TS0
+     59                    
+     60          } 
+     61          //******************************************************************************************
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     62          unsigned char decodeIR()
+   \                     decodeIR:
+     63          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C3                    PUSH      BC
+   \   000001 C5                    PUSH      DE
+   \   000002                       ; Auto size: 6
+   \   000002 2006                  SUBW      SP, #0x6
+     64                int i;
+     65                unsigned int addr;
+     66                unsigned long payload =0;
+   \   000004 AEF8                  MOVW      AX, SP
+   \   000006 A1                    INCW      AX
+   \   000007 A1                    INCW      AX
+   \   000008 16                    MOVW      HL, AX
+   \   000009 F6                    CLRW      AX
+   \   00000A BB                    MOVW      [HL], AX
+   \   00000B F6                    CLRW      AX
+   \   00000C BC02                  MOVW      [HL+0x02], AX
+     67               
+     68                unsigned char cmd; 
+     69                
+     70                           
+     71                          for ( i=2; i< 35 ;i++)
+   \   00000E 300200                MOVW      AX, #0x2
+   \   000011 B800                  MOVW      [SP], AX
+   \   000013 EF38                  BR        S:??MD_INTTM03_0
+     72                          {  
+     73                            if(PulseWidth[i] > 150 && PulseWidth[i] < 200)
+     74                            { 
+     75                                payload >>= 1; 
+   \                     ??decodeIR_0:
+   \   000015 AEF8                  MOVW      AX, SP
+   \   000017 A1                    INCW      AX
+   \   000018 A1                    INCW      AX
+   \   000019 16                    MOVW      HL, AX
+   \   00001A AC02                  MOVW      AX, [HL+0x02]
+   \   00001C 12                    MOVW      BC, AX
+   \   00001D AB                    MOVW      AX, [HL]
+   \   00001E 5401                  MOV       E, #0x1
+   \   000020 FD....                CALL      N:?UL_RSH_L03
+   \   000023 16                    MOVW      HL, AX
+   \   000024 AEF8                  MOVW      AX, SP
+   \   000026 A1                    INCW      AX
+   \   000027 A1                    INCW      AX
+   \   000028 37                    XCHW      AX, HL
+   \   000029 BB                    MOVW      [HL], AX
+   \   00002A 13                    MOVW      AX, BC
+   \   00002B BC02                  MOVW      [HL+0x02], AX
+   \   00002D 12                    MOVW      BC, AX
+     76                                payload |= 0x80000000;
+   \   00002E AEF8                  MOVW      AX, SP
+   \   000030 A1                    INCW      AX
+   \   000031 A1                    INCW      AX
+   \   000032 16                    MOVW      HL, AX
+   \   000033 AC02                  MOVW      AX, [HL+0x02]
+   \   000035 12                    MOVW      BC, AX
+   \   000036 AB                    MOVW      AX, [HL]
+   \   000037 618B                  XCH       A, B
+   \   000039 6C80                  OR        A, #0x80
+   \   00003B 618B                  XCH       A, B
+   \   00003D 16                    MOVW      HL, AX
+   \   00003E AEF8                  MOVW      AX, SP
+   \   000040 A1                    INCW      AX
+   \   000041 A1                    INCW      AX
+   \   000042 37                    XCHW      AX, HL
+   \   000043 BB                    MOVW      [HL], AX
+   \   000044 13                    MOVW      AX, BC
+   \   000045 BC02                  MOVW      [HL+0x02], AX
+   \   000047 12                    MOVW      BC, AX
+     77                            }    
+   \                     ??decodeIR_1:
+   \   000048 A800                  MOVW      AX, [SP]
+   \   00004A A1                    INCW      AX
+   \   00004B B800                  MOVW      [SP], AX
+   \                     ??MD_INTTM03_0:
+   \   00004D A800                  MOVW      AX, [SP]
+   \   00004F 7C80                  XOR       A, #0x80
+   \   000051 442380                CMPW      AX, #0x8023
+   \   000054 DE71                  BNC       ??MD_INTTM03_1
+   \   000056 309700                MOVW      AX, #0x97
+   \   000059 F7                    CLRW      BC
+   \   00005A C3                    PUSH      BC
+   \   00005B C1                    PUSH      AX
+   \   00005C A804                  MOVW      AX, [SP+0x04]
+   \   00005E 320400                MOVW      BC, #0x4
+   \   000061 FD....                CALL      N:?I_MUL_L02
+   \   000064 04....                ADDW      AX, #PulseWidth
+   \   000067 16                    MOVW      HL, AX
+   \   000068 AC02                  MOVW      AX, [HL+0x02]
+   \   00006A 12                    MOVW      BC, AX
+   \   00006B AB                    MOVW      AX, [HL]
+   \   00006C C4                    POP       DE
+   \   00006D C6                    POP       HL
+   \   00006E 25                    SUBW      AX, DE
+   \   00006F 61D8                  SKNC
+   \   000071 B3                    DECW      BC
+   \                     ??decodeIR_2:
+   \   000072 33                    XCHW      AX, BC
+   \   000073 27                    SUBW      AX, HL
+   \   000074 440000                CMPW      AX, #0x0
+   \   000077 13                    MOVW      AX, BC
+   \   000078 61F8                  SKNZ
+   \   00007A 443100                CMPW      AX, #0x31
+   \                     ??decodeIR_3:
+   \   00007D DC96                  BC        ??decodeIR_0
+     78                            else if(PulseWidth[i] > 200  && PulseWidth[i] < 270)
+   \   00007F 30C900                MOVW      AX, #0xC9
+   \   000082 F7                    CLRW      BC
+   \   000083 C3                    PUSH      BC
+   \   000084 C1                    PUSH      AX
+   \   000085 A804                  MOVW      AX, [SP+0x04]
+   \   000087 320400                MOVW      BC, #0x4
+   \   00008A FD....                CALL      N:?I_MUL_L02
+   \   00008D 04....                ADDW      AX, #PulseWidth
+   \   000090 16                    MOVW      HL, AX
+   \   000091 AC02                  MOVW      AX, [HL+0x02]
+   \   000093 12                    MOVW      BC, AX
+   \   000094 AB                    MOVW      AX, [HL]
+   \   000095 C4                    POP       DE
+   \   000096 C6                    POP       HL
+   \   000097 25                    SUBW      AX, DE
+   \   000098 61D8                  SKNC
+   \   00009A B3                    DECW      BC
+   \                     ??decodeIR_4:
+   \   00009B 33                    XCHW      AX, BC
+   \   00009C 27                    SUBW      AX, HL
+   \   00009D 440000                CMPW      AX, #0x0
+   \   0000A0 13                    MOVW      AX, BC
+   \   0000A1 61F8                  SKNZ
+   \   0000A3 444500                CMPW      AX, #0x45
+   \                     ??decodeIR_5:
+   \   0000A6 DE1B                  BNC       ??MD_INTTM03_2
+     79                                 payload >>= 1;
+   \   0000A8 AEF8                  MOVW      AX, SP
+   \   0000AA A1                    INCW      AX
+   \   0000AB A1                    INCW      AX
+   \   0000AC 16                    MOVW      HL, AX
+   \   0000AD AC02                  MOVW      AX, [HL+0x02]
+   \   0000AF 12                    MOVW      BC, AX
+   \   0000B0 AB                    MOVW      AX, [HL]
+   \   0000B1 5401                  MOV       E, #0x1
+   \   0000B3 FD....                CALL      N:?UL_RSH_L03
+   \   0000B6 16                    MOVW      HL, AX
+   \   0000B7 AEF8                  MOVW      AX, SP
+   \   0000B9 A1                    INCW      AX
+   \   0000BA A1                    INCW      AX
+   \   0000BB 37                    XCHW      AX, HL
+   \   0000BC BB                    MOVW      [HL], AX
+   \   0000BD 13                    MOVW      AX, BC
+   \   0000BE BC02                  MOVW      [HL+0x02], AX
+   \   0000C0 12                    MOVW      BC, AX
+   \   0000C1 EF85                  BR        S:??decodeIR_1
+     80                            else 
+     81                              return 0xFFU;
+   \                     ??MD_INTTM03_2:
+   \   0000C3 51FF                  MOV       A, #0xFF
+   \   0000C5 EF0B                  BR        S:??MD_INTTM03_3
+     82                              
+     83                          } 
+     84                          
+     85                          addr = (unsigned int)(payload & 0xffffU);
+   \                     ??MD_INTTM03_1:
+   \   0000C7 AEF8                  MOVW      AX, SP
+   \   0000C9 A1                    INCW      AX
+   \   0000CA A1                    INCW      AX
+   \   0000CB 16                    MOVW      HL, AX
+   \   0000CC AC02                  MOVW      AX, [HL+0x02]
+   \   0000CE 12                    MOVW      BC, AX
+   \   0000CF AB                    MOVW      AX, [HL]
+   \   0000D0 14                    MOVW      DE, AX
+     86                          cmd  = (unsigned char) payload >> 24;
+   \   0000D1 F1                    CLRB      A
+     87                        
+     88                
+     89                       return cmd;
+   \                     ??MD_INTTM03_3:
+   \   0000D2 1006                  ADDW      SP, #0x6
+   \   0000D4 C4                    POP       DE
+   \   0000D5 C2                    POP       BC
+   \   0000D6 D7                    RET       
+   \   0000D7                       REQUIRE ?CLRL78_V1_0_L00
+     90                
+     91                
+     92          } 
+     93          
+     94          //******************************************************************************************
+     95          
+     96          #pragma vector = INTTM03_vect
+
+   \                                 In  segment CODE, align 1, keep-with-next
+     97          __interrupt void MD_INTTM03(void)
+   \                     MD_INTTM03:
+     98          {
+   \   000000                       ; * Stack frame (at entry) *
+   \   000000                       ; Param size: 0
+   \   000000 C1                    PUSH      AX
+   \   000001 C3                    PUSH      BC
+   \   000002 C5                    PUSH      DE
+   \   000003 C7                    PUSH      HL
+   \   000004                       ; Auto size: 0
+     99          
+    100           
+    101           
+    102                  /* Allow interrupts to nest inside this one - preserve 25% duty cycle output */
+    103                  // __enable_interrupt;
+    104                  
+    105          	if ((TSR03 & 0x0001) != 0U)	/* overflow occurs */
+   \   000004 AFA601                MOVW      AX, 0x1A6
+   \   000007 60                    MOV       A, X
+   \   000008 5C01                  AND       A, #0x1
+   \   00000A D1                    CMP0      A
+   \   00000B DD14                  BZ        ??MD_INTTM03_4
+    106          	{			
+    107          		gTau0Ch3Width = (unsigned long)TDR03 + 0x10000U;
+   \   00000D AE66                  MOVW      AX, 0xFFF66
+   \   00000F F7                    CLRW      BC
+   \   000010 040000                ADDW      AX, #0x0
+   \   000013 61D8                  SKNC
+   \   000015 A3                    INCW      BC
+   \                     ??MD_INTTM03_5:
+   \   000016 A3                    INCW      BC
+   \   000017 BF....                MOVW      N:gTau0Ch3Width, AX
+   \   00001A 13                    MOVW      AX, BC
+   \   00001B BF....                MOVW      N:gTau0Ch3Width+2, AX
+   \   00001E 12                    MOVW      BC, AX
+   \   00001F EF0B                  BR        S:??MD_INTTM03_6
+    108          	}
+    109          	else
+    110          	{
+    111          		gTau0Ch3Width = (unsigned long)TDR03;
+   \                     ??MD_INTTM03_4:
+   \   000021 AE66                  MOVW      AX, 0xFFF66
+   \   000023 F7                    CLRW      BC
+   \   000024 BF....                MOVW      N:gTau0Ch3Width, AX
+   \   000027 13                    MOVW      AX, BC
+   \   000028 BF....                MOVW      N:gTau0Ch3Width+2, AX
+   \   00002B 12                    MOVW      BC, AX
+    112          	}
+    113                  
+    114                  PulseWidth[irPtr++] = gTau0Ch3Width;
+   \                     ??MD_INTTM03_6:
+   \   00002C DB....                MOVW      BC, N:gTau0Ch3Width+2
+   \   00002F AF....                MOVW      AX, N:gTau0Ch3Width
+   \   000032 C3                    PUSH      BC
+   \   000033 C1                    PUSH      AX
+   \   000034 AF....                MOVW      AX, N:irPtr
+   \   000037 320400                MOVW      BC, #0x4
+   \   00003A FD....                CALL      N:?I_MUL_L02
+   \   00003D 04....                ADDW      AX, #PulseWidth
+   \   000040 16                    MOVW      HL, AX
+   \   000041 C0                    POP       AX
+   \   000042 C2                    POP       BC
+   \   000043 BB                    MOVW      [HL], AX
+   \   000044 13                    MOVW      AX, BC
+   \   000045 BC02                  MOVW      [HL+0x02], AX
+   \   000047 12                    MOVW      BC, AX
+   \   000048 A2....                INCW      N:irPtr
+    115                  if (irPtr == 70 - 1) 
+   \   00004B AF....                MOVW      AX, N:irPtr
+   \   00004E 444500                CMPW      AX, #0x45
+   \   000051 DF04                  BNZ       ??MD_INTTM03_7
+    116                      irPtr = 0;  
+   \   000053 F6                    CLRW      AX
+   \   000054 BF....                MOVW      N:irPtr, AX
+    117                 
+    118                 
+    119                 if ((PulseWidth[0] > 70000 && PulseWidth[0] < 130000) && 
+    120                     (PulseWidth[1] > 120 && PulseWidth[1] < 300))
+   \                     ??MD_INTTM03_7:
+   \   000057 347111                MOVW      DE, #0x1171
+   \   00005A E6                    ONEW      AX
+   \   00005B 16                    MOVW      HL, AX
+   \   00005C DB....                MOVW      BC, N:PulseWidth+2
+   \   00005F AF....                MOVW      AX, N:PulseWidth
+   \   000062 25                    SUBW      AX, DE
+   \   000063 61D8                  SKNC
+   \   000065 B3                    DECW      BC
+   \                     ??MD_INTTM03_8:
+   \   000066 33                    XCHW      AX, BC
+   \   000067 27                    SUBW      AX, HL
+   \   000068 440000                CMPW      AX, #0x0
+   \   00006B 13                    MOVW      AX, BC
+   \   00006C 61F8                  SKNZ
+   \   00006E 445FEA                CMPW      AX, #0xEA5F
+   \                     ??MD_INTTM03_9:
+   \   000071 DE1F                  BNC       ??MD_INTTM03_10
+   \   000073 347900                MOVW      DE, #0x79
+   \   000076 F6                    CLRW      AX
+   \   000077 16                    MOVW      HL, AX
+   \   000078 DB....                MOVW      BC, N:PulseWidth+6
+   \   00007B AF....                MOVW      AX, N:PulseWidth+4
+   \   00007E 25                    SUBW      AX, DE
+   \   00007F 61D8                  SKNC
+   \   000081 B3                    DECW      BC
+   \                     ??MD_INTTM03_11:
+   \   000082 33                    XCHW      AX, BC
+   \   000083 27                    SUBW      AX, HL
+   \   000084 440000                CMPW      AX, #0x0
+   \   000087 13                    MOVW      AX, BC
+   \   000088 61F8                  SKNZ
+   \   00008A 44B300                CMPW      AX, #0xB3
+   \                     ??MD_INTTM03_12:
+   \   00008D 61D8                  SKNC
+    121                 {
+    122                   
+    123                   
+    124                   got_packet = 1;
+   \   00008F E5....                ONEB      N:got_packet
+    125                   
+    126                   
+    127                   
+    128                 }  
+    129                  
+    130                  /*
+    131                  
+    132                    if (rx_fronthalf) {
+    133                      
+    134                      // If we've seen many pulses when we're expecting the first 32 cycles 
+    135                      if (pulses_seen > 28) {
+    136                          
+    137                          if ((pulses_seen > 56) || (rx_packet[rx_index - 1] == 0)) {
+    138                              pulses_seen = 0;
+    139                              
+    140                              //The current bit is zero if we have many pulses back to back (1 to 0 transition)
+    141                               // or if we have a handful of pulses and the previous bit was zero (0 to 0 transition)
+    142                               
+    143                              rx_packet[rx_index] = 0;
+    144                              
+    145                              // Start looking for the next 32 cycles in this bit 
+    146                              rx_fronthalf = 0;
+    147                          }
+    148                      }
+    149                  
+    150                  // Are we receiving the second 32 cycles of an incoming pulse train? 
+    151                  } else {
+    152                      if (rx_packet[rx_index] == 1) {
+    153                          if (pulses_seen > 28) {
+    154                              rx_index++;
+    155                              
+    156                              // If the current bit was detected as a 1 already, then we can start looking for
+    157                             // the front half of the next bit after we receive a bunch of high cycles
+    158                              
+    159                              rx_fronthalf = 1;
+    160                              
+    161                              // If we completed reception of the last bit, reset the bit counter for the 
+    162                              // rx_packet and prepare to display the command byte on screen
+    163                            
+    164                              if (rx_index > 13) {
+    165                                  rx_index = 0;
+    166                                  got_packet = 1;
+    167                              }
+    168                          }
+    169                      }
+    170                  }
+    171                  
+    172                  // Count pulses seen by this interrupt 
+    173                  if (pulses_seen < 100)
+    174                      pulses_seen++;
+    175                  
+    176                  // Reset the interval timeout counter 
+    177                  it_timeouts = 0;
+    178                  */
+    179                  // Restart the interval timer 
+    180                  TT0 |= 0x0008;
+   \                     ??MD_INTTM03_10:
+   \   000092 36B401                MOVW      HL, #0x1B4
+   \   000095 71B2                  SET1      [HL].3
+    181          	// Mask channel 3 interrupt 
+    182          	TMMK03 = 1U;	// disable INTTM03 interrupt 
+   \   000097 717AE6                SET1      0xFFFE6.7
+    183          	TMIF03 = 0U;	// clear INTTM03 interrupt flag 
+   \   00009A 717BE2                CLR1      0xFFFE2.7
+    184                  TMIF03 = 0U;	// clear INTTM03 interrupt flag 
+   \   00009D 717BE2                CLR1      0xFFFE2.7
+    185          	TMMK03 = 0U;	// enable INTTM03 interrupt 
+   \   0000A0 717BE6                CLR1      0xFFFE6.7
+    186          	TS0 |= 0x0008;
+   \   0000A3 36B201                MOVW      HL, #0x1B2
+   \   0000A6 71B2                  SET1      [HL].3
+    187                  
+    188                 
+    189                  
+    190          } //fin INT   
+   \   0000A8 C6                    POP       HL
+   \   0000A9 C4                    POP       DE
+   \   0000AA C2                    POP       BC
+   \   0000AB C0                    POP       AX
+   \   0000AC 61FC                  RETI      
+   \   0000AE                       REQUIRE ?CLRL78_V1_0_L00
+   \   0000AE                       REQUIRE _A_TSR03
+   \   0000AE                       REQUIRE _A_TDR03
+   \   0000AE                       REQUIRE _A_TT0
+   \   0000AE                       REQUIRE _A_MK1
+   \   0000AE                       REQUIRE _A_IF1
+   \   0000AE                       REQUIRE _A_TS0
+
+   \                                 In  segment INTVEC, offset 0x32, root
+   \                     `??MD_INTTM03??INTVEC 50`:
+   \   000032 ....                  DW MD_INTTM03
+
+   \                                 In  segment NEAR_ID, align 1, align-sorted
+   \                     `?<Initializer for rx_fronthalf>`:
+   \   000000 01                    DB 1
+    191          
+    192          //*********************************************************************************************
+    193          /*
+    194          #pragma vector = INTIT_vect
+    195          __interrupt void MD_INTIT(void)
+    196          {
+    197          	// Start user code. Do not edit comment generated here 
+    198              // Allow interrupts to nest inside this one 
+    199             //__enable_interrupt;
+    200              
+    201             // Reset to look for the first bit if we time out too much while looking for the back half 
+    202              if (it_timeouts > 8) {
+    203                  rx_fronthalf = 1;
+    204                  rx_index = 0;
+    205              }
+    206              
+    207              //If we're looking for the front half of the bit and we time out, we get a 1 if we time out more than
+    208             // once (first 32 cycles are low) or if the previous bit is 1 and we only get one timeout.
+    209              
+    210              if (rx_fronthalf) {
+    211                  if ((it_timeouts > 1) || (rx_packet[rx_index-1] == 1)) {
+    212                      rx_packet[rx_index] = 1;
+    213                      rx_fronthalf = 0;
+    214                  }
+    215              
+    216              // If we're looking for the back half of the current bit and we get a timeout, 
+    217              // we confirm that the current bit is a zero (because the first 32 cycles were high).
+    218              // Increment the index and if we've filled the buffer, prepare to disply it on screen.
+    219              
+    220              } else {
+    221                  if (rx_packet[rx_index] == 0) {
+    222                      rx_index++;
+    223                      rx_fronthalf = 1;
+    224                      if (rx_index > 13) {
+    225                          rx_index = 0;
+    226                          got_packet = 1;
+    227                      }
+    228                  }
+    229              }
+    230              
+    231              // Count the number of consecutive timeouts not interrupted by an IR pulse 
+    232              if (it_timeouts < 100)
+    233                  it_timeouts++;
+    234              
+    235             // Set the consecutive IR pulses seen to zero 
+    236              pulses_seen = 0;
+    237              
+    238              // Start the interval timer over 
+    239                  ITIF = 0U;	// clear INTIT interrupt flag 
+    240          	ITMK = 0U;	// enable INTIT interrupt 
+    241          	ITMC |= 0x8000;	// enable IT operation 
+    242          
+    243          	// End user code. Do not edit comment generated here
+    244          }
+    245          */
+
+   Segment part sizes:
+
+     Function/Label                  Bytes
+     --------------                  -----
+     _A_PM3                             1
+     _A_TDR03                           2
+     _A_IF1                             2
+     _A_MK1                             2
+     _A_NFEN1                           1
+     TMR03                              2
+     _A_TSR03                           2
+     _A_TS0                             2
+     _A_TT0                             2
+     _A_TO0                             2
+     _A_TOE0                            2
+     _A_TOL0                            2
+     _A_TOM0                            2
+     gTau0Ch3Width                      4
+     rx_index                           1
+     rx_fronthalf                       1
+     rx_packet                         14
+     got_packet                         1
+     pulses_seen                        2
+     packet                            14
+     it_timeouts                        1
+     PulseWidth                       280
+     irPtr                              2
+     startIR                           22
+     initIR                            69
+     decodeIR                         215
+     MD_INTTM03                       174
+     ??MD_INTTM03??INTVEC 50            2
+     ?<Initializer for rx_fronthalf>    1
+
+ 
+ 480 bytes in segment CODE
+   2 bytes in segment INTVEC
+  24 bytes in segment NEAR_A
+   1 byte  in segment NEAR_I
+   1 byte  in segment NEAR_ID
+ 319 bytes in segment NEAR_Z
+ 
+ 480 bytes of CODE  memory (+  2 bytes shared)
+   1 byte  of CONST memory
+ 320 bytes of DATA  memory (+ 24 bytes shared)
+
+Errors: none
+Warnings: 2
